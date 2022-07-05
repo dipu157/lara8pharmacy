@@ -16,9 +16,19 @@ class Employee extends Model
     protected $fillable = [
     	'company_id',
         'first_name',
+        'last_name',
         'full_name',
+        'photo',
+        'email',
         'address',
         'city',
+        'state',
         'post_code',
+        'mobile',
+        'dob',
+        'gender',
+        'blood_group',
+        'last_education',
+        'national_id',
     ];
 }

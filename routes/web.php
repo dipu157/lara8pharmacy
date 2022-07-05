@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +21,10 @@ Route::get('/home', function () { return view('dashboard'); })->name('home')->mi
 
 
 
-Route::get('/settings', [HomeController::class, 'templateSettings'])->name('company');
+Route::get('/settings', [HomeController::class, 'templateSettings'])->name('company')->middleware('auth');
+Route::post('/settingsEdit', [HomeController::class, 'editSettings'])->name('editCompany')->middleware('auth');
+
+
+Route::get('/manageEmployee', function () { return view('Employee.employeeIndex'); })->name('manageEmployee')->middleware('auth');
+Route::get('/allEmployee', [EmployeeController::class, 'index'])->name('allEmployee')->middleware('auth');
+Route::get('/edit', [EmployeeController::class, 'edit'])->name('edit');

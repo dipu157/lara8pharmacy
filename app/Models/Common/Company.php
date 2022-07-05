@@ -20,5 +20,8 @@ class Company extends Model
         'address',
         'city',
         'country',
+        'website',
+        'email',
+        'phone',
     ];
 }
