@@ -42,7 +42,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="{{ route('home') }}" style="font-weight: bold;" class="nav-link">Dashboard</a>
       </li>
     </ul>
 
@@ -160,9 +160,23 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
-      <li class="nav-item">
-        <a style="font-weight: bold; color: red" class="nav-link" href="#"> LOGOUT </a>
-      </li>
+
+      @guest
+        @if (Route::has('login'))
+          <li class="nav-item">
+              <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+          </li>
+        @endif
+        @else
+
+        <li class="nav-item">
+          <a style="font-weight: bold; color: red" class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> LOGOUT </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+            </form>
+        </li>
+      @endguest
+
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -206,7 +220,7 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item">
             <a href="./index.html" class="nav-link active">
-              <p>Dashboard</p>
+              <p>POS</p>
             </a>
             
           </li>
@@ -214,9 +228,8 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
-                Layout Options
+                Supplier
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -224,42 +237,6 @@
                 <a href="pages/layout/top-nav.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Top Navigation</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Top Navigation + Sidebar</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/boxed.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Boxed</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/fixed-sidebar.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Sidebar</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/fixed-sidebar-custom.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Sidebar <small>+ Custom Area</small></p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/fixed-topnav.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Navbar</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/fixed-footer.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Footer</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -274,7 +251,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
-                Forms
+                Medicine
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -283,18 +260,6 @@
                 <a href="pages/forms/general.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>General Elements</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/forms/advanced.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Advanced Elements</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/forms/editors.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Editors</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -309,7 +274,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>
-                Tables
+                Purchase
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -320,112 +285,134 @@
                   <p>Simple Tables</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="pages/tables/data.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>DataTables</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/tables/jsgrid.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>jsGrid</p>
-                </a>
-              </li>
             </ul>
-          </li>
-          <li class="nav-header">EXAMPLES</li>
-          
-          <li class="nav-item">
-            <a href="pages/kanban.html" class="nav-link">
-              <i class="nav-icon fas fa-columns"></i>
-              <p>
-                Kanban Board
-              </p>
-            </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-envelope"></i>
+              <i class="nav-icon fas fa-table"></i>
               <p>
-                Mailbox
+                Inventory
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/mailbox/mailbox.html" class="nav-link">
+                <a href="pages/tables/simple.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Inbox</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/mailbox/compose.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Compose</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/mailbox/read-mail.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Read</p>
+                  <p>Simple Tables</p>
                 </a>
               </li>
             </ul>
           </li>
-          <li class="nav-header">MULTI LEVEL EXAMPLE</li>
-          
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-circle"></i>
+              <i class="nav-icon fas fa-table"></i>
               <p>
-                Level 1
-                <i class="right fas fa-angle-left"></i>
+                Customer
+                <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="pages/tables/simple.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Level 2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>
-                    Level 2
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Level 2</p>
+                  <p>Simple Tables</p>
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Accounts
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="pages/tables/simple.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Simple Tables</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Return
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="pages/tables/simple.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Simple Tables</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Report
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="pages/tables/simple.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Simple Tables</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Employee
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="pages/tables/simple.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Simple Tables</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Doctor
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="pages/tables/simple.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Simple Tables</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('company') }}" class="nav-link">
+              <i class="nav-icon fas fa-wrench"></i>
+              <p>
+                Template
+              </p>
+            </a>
           </li>
           
         </ul>
@@ -485,7 +472,6 @@
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
-{{-- <script src="dist/js/demo.js"></script> --}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>
 </body>

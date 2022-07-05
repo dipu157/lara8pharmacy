@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'role_id'=>1,
             'employee_id'=>1,
             'name' => 'Admin',
-            'email' => 'admin@brbhospital.com',
+            'email' => 'admin@pharmacy.com',
             'password' => bcrypt('pass123')
         ]);
     }

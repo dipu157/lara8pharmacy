@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,3 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () { return view('auth.login'); });
+Route::view('home','dashboard')->middleware('auth');
+Route::get('/home', function () { return view('dashboard'); })->name('home')->middleware('auth');
+
+
+
+Route::get('/settings', [HomeController::class, 'templateSettings'])->name('company');
