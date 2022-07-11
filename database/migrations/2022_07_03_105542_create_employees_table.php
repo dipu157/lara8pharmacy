@@ -19,13 +19,13 @@ class CreateEmployeesTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('RESTRICT');
             $table->string('first_name',150);
             $table->string('last_name',150)->nullable();
-            $table->string('full_name',150);
+            $table->string('full_name',150)->nullable();
             $table->string('photo')->nullable();
             $table->string('email',190)->nullable();
             $table->string('address',240);
-            $table->string('city',25);
+            $table->string('city',25)->nullable();
             $table->string('state',50)->nullable();
-            $table->string('post_code',4);
+            $table->string('post_code',4)->nullable();
             $table->string('district',240)->nullable();
             $table->string('mobile',150)->nullable();
             $table->date('dob')->nullable();

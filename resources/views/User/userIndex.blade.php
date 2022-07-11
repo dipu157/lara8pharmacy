@@ -7,20 +7,20 @@
 	      <div class="container-fluid">
 	        <div class="row mb-2">
 	          <div class="col-sm-6">
-	            <h1>Employee List</h1>
+	            <h1>User List</h1>
 	          </div>
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
 	              <li class="breadcrumb-item"><a href="#">Home</a></li>
-	              <li class="breadcrumb-item active">Employee List</li>
+	              <li class="breadcrumb-item active">User List</li>
 	            </ol>
 	          </div>
 	        </div>
 	      </div><!-- /.container-fluid -->
     </section>
 
-    @include('Employee.modals.addEmployee')
-	@include('Employee.modals.editEmployee')
+    @include('User.modals.addUser')
+	@include('User.modals.editUser')
 
     <section class="content">
       <div class="container-fluid">
@@ -29,10 +29,10 @@
 
             <div class="card">
               <div class="card-header">
-                <button class="card-title btn btn-info btn-sm" data-toggle="modal" data-target="#addEmployeeModal"><i class="fa fa-plus"></i>Add Employee</button>
+                <button class="card-title btn btn-info btn-sm" data-toggle="modal" data-target="#addUserModal"><i class="fa fa-plus"></i>Add User</button>
               </div>
               <!-- /.card-header -->
-              <div class="card-body" id="show_all_employees">
+              <div class="card-body" id="show_all_users">
                 
               </div>
               <!-- /.card-body -->
@@ -76,33 +76,33 @@
 
     <script type="text/javascript">
     	
-    	// Get All employee function acll
-    	fetchAllEmployees();
+    	// Get All User function acll
+    	fetchAllUsers();
 
-    	// Get All employee function
-		function fetchAllEmployees(){
+    	// Get All User function
+		function fetchAllUsers(){
 		$.ajax({
-		url: '{{ route('allEmployee') }}',
+		url: '{{ route('allUser') }}',
 		method: 'get',
 		success: function(res){
-		$("#show_all_employees").html(res);
+		$("#show_all_users").html(res);
 
 		$("table").DataTable({
 		      "responsive": true, "lengthChange": false, "autoWidth": false,
 		      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-		    }).buttons().container().appendTo('#getAllEmployee_wrapper .col-md-6:eq(0)');
+		    }).buttons().container().appendTo('#getAllUser_wrapper .col-md-6:eq(0)');
 
 		}
 		});
 		}
 
-		// Add Employee Code
-	$("#add_employee_form").submit(function(e){
+		// Add User Code
+	$("#add_user_form").submit(function(e){
 	e.preventDefault();
 	const fd = new FormData(this);
-	$("#add_employee_btn").text('Adding...');
+	$("#add_user_btn").text('Adding...');
 	$.ajax({
-	url: '{{ route('save') }}',
+	url: '{{ route('register') }}',
 	method: 'post',
 	data: fd,
 	cache: false,
@@ -110,23 +110,23 @@
 	contentType: false,
 	success: function(res){
 	if(res.status == 200){
-		alert("Data Save Successfully");
-		fetchAllEmployees();
+		alert("User Create Successfully");
+		fetchAllUsers();
 	}
-	$("#add_employee_btn").text('SAVE');
-	$("#add_employee_form")[0].reset();
-	$("#addEmployeeModal").modal('hide');
+	$("#add_user_btn").text('REGISTER');
+	$("#add_user_form")[0].reset();
+	$("#addUserModal").modal('hide');
 	}
 
 	});
 	});
 
-		//Edit Icon click for Employee Edit
+		//Edit Icon click for User Edit
 		$(document).on('click', '.editIcon', function(e){
 		e.preventDefault();
 		let id = $(this).attr('id');
 		$.ajax({
-		url: '{{ route('edit') }}',
+		url: '{{ route('edit.user') }}',
 		method: 'get',
 		data: {
 		id: id,
@@ -135,39 +135,21 @@
 		success: function(res){
 			console.log(res);
 
-			// Getting DOB in date format
-			date = new Date(res.dob);
-			var year = date.getFullYear();
-			var month = date.getMonth()+1;
-			month = ('0'+month).slice(-2);
-			var day = date.getDate();
-			day = ('0'+day).slice(-2);
-			full_date = year+'-'+month+'-'+day;
-
-			$("#first_name").val(res.first_name);
-			$("#last_name").val(res.last_name);
-			$('#emp_blood_group option[value="'+res.blood_group+'"]').prop('selected', true);
-			$("#mobile").val(res.mobile);
-			$("#emp_dob").val(full_date);
-			$("#emp_email").val(res.email);
-			$("input[name=gender][value=" + res.gender + "]").prop('checked', true);
-			$("#emp_national_id").val(res.national_id);
-			$("#emp_address").val(res.address);			
-			$("#emp_last_education").val(res.last_education);
-			$("#emp_img").html(`<img src="storage/images/${res.photo}" width="100" class="img-fluid img-thumbnail">`);
-			$("#emp_id").val(res.id);
-			$("#emp_photo").val(res.photo);
+			$('#role_id option[value="'+res.role_id+'"]').prop('selected', true);
+			$('#employee_id option[value="'+res.employee_id+'"]').prop('selected', true);
+			$("#email").val(res.email);
+			$("#user_id").val(res.id);
 		}
 		});
 		});
 
-		// update employee ajax request
-	$("#edit_employee_form").submit(function(e) {
+		// update User ajax request
+	$("#edit_user_form").submit(function(e) {
 	e.preventDefault();
 	const fd = new FormData(this);
-	$("#edit_employee_btn").text('Updating...');
+	$("#edit_user_btn").text('Updating...');
 		$.ajax({
-			url: '{{ route('update') }}',
+			url: '{{ route('update.user') }}',
 			method: 'post',
 			data: fd,
 			cache: false,
@@ -177,16 +159,16 @@
 		success: function(response) {
 			if (response.status == 200) {
 				alert("Update Successfully");
-				fetchAllEmployees();
+				fetchAllUsers();
 			}
-			$("#edit_employee_btn").text('Update');
-			$("#edit_employee_form")[0].reset();
-			$("#editEmployeeModal").modal('hide');
+			$("#edit_user_btn").text('Update');
+			$("#edit_user_form")[0].reset();
+			$("#editUserModal").modal('hide');
 			}
 		});
 	});
 
-	// delete employee ajax request
+	// delete User ajax request
 	$(document).on('click', '.deleteIcon', function(e) {
 		e.preventDefault();
 		let id = $(this).attr('id');
@@ -202,7 +184,7 @@
 		}).then((result) => {
 		if (result.isConfirmed) {
 		$.ajax({
-			url: '{{ route('delete') }}',
+			url: '{{ route('deleteUser') }}',
 			method: 'delete',
 			data: {
 			id: id,
@@ -215,7 +197,7 @@
 			'Your file has been deleted.',
 			'success'
 			)
-			fetchAllEmployees();
+			fetchAllUsers();
 		}
 		});
 		}
@@ -226,13 +208,12 @@
     <script>
     	$(function () {
 
-    		$('.select2').select2()
+    		$('.select2').select2();
 
-    		//Date picker
-		    $('#reservationdate').datetimepicker({
-		        format: 'L'
+    		//Initialize Select2 Elements
+		    $('.select2bs4').select2({
+		      theme: 'bootstrap4'
 		    });
-
 
     	})
     </script>

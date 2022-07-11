@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Common\Company;
 use App\Models\Common\Employee;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 use Auth;
 
 class EmployeeController extends Controller
@@ -25,6 +27,8 @@ class EmployeeController extends Controller
 
     public function index()
     {
+       // echo $current = Carbon::now()->format('Y-m-d');
+
         $emps = Employee::all();
         $output = '';
         if($emps->count() > 0){
@@ -35,6 +39,7 @@ class EmployeeController extends Controller
                     <th>Photo</th>
                     <th>Full Name</th>
                     <th>Phone</th>
+                    <th>Email</th>
                     <th>Blood Group</th>
                     <th>action</th>
                 </tr>
@@ -44,12 +49,13 @@ class EmployeeController extends Controller
                 $output .= '<tr>
                 <td>'.$emp->id.'</td>
                 <td><img src="storage/images/'.$emp->photo.'" width="50" 
-                class="img-thumbnail rounded-circle"></td>
+                class="img-thumbnail"></td>
                 <td>'. $emp->first_name.' '.$emp->last_name. '</td>
                 <td>'.$emp->mobile.'</td>
+                <td>'.$emp->email.'</td>
                 <td>'.$emp->blood_group.'</td>
                 <td>
-                  <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editEmployeeModal"><i class="fa fa-edit"></i></a>
+                  <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="fa fa-edit"></i></a>
 
                   <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="fa fa-trash"></i></a>
                 </td>
@@ -64,44 +70,35 @@ class EmployeeController extends Controller
      //   return view('employeeIndex');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
+        $file = $request->file('photo');
+        $filename = time().'.'.$file->getClientOriginalExtension();
+        $file->storeAs('public/images', $filename);
+
+        $empData = [
+            'company_id' => $this->company_id,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+            'dob' => Carbon::createFromFormat('d/m/Y',$request['dob'])->format('Y-m-d'),
+            'gender' => $request->gender,
+            'national_id' => $request->national_id,
+            'address' => $request->address,
+            'blood_group' => $request->blood_group,
+            'last_education' => $request->last_education,
+            'photo' => $filename,
+        ];
+
+        Employee::create($empData);
+        return response()->json([
+            'status' => 200
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request){
 
         $id = $request->id;
@@ -109,26 +106,49 @@ class EmployeeController extends Controller
         return response()->json($emp);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+
+     // handle update an employee ajax request
+    public function update(Request $request) {
+
+        $fileName = '';
+        $emp = Employee::find($request->id);
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/images', $fileName);
+            if ($emp->photo) {
+                Storage::delete('public/images/' . $emp->photo);
+            }
+        } else {
+            $fileName = $request->emp_photo;
+        }
+
+        $empData = [
+            'first_name' => $request->first_name, 
+            'last_name' => $request->last_name, 
+            'email' => $request->email, 
+            'mobile' => $request->mobile, 
+            'dob' => $request->dob, 
+            'gender' => $request->gender, 
+            'national_id' => $request->national_id, 
+            'address' => $request->address, 
+            'blood_group' => $request->blood_group, 
+            'last_education' => $request->last_education, 
+            'photo' => $fileName
+        ];
+
+        $emp->update($empData);
+        return response()->json([
+            'status' => 200,
+        ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function delete(Request $request) {
+        $id = $request->id;
+        $emp = Employee::find($id);
+        if (Storage::delete('public/images/' . $emp->photo)) {
+            Employee::destroy($id);
+        }
     }
+
 }

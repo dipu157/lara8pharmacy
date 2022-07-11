@@ -23,6 +23,9 @@
   <link rel="stylesheet" href="{{asset('/')}}plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{asset('/')}}plugins/daterangepicker/daterangepicker.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{asset('/')}}plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="{{asset('/')}}plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('/')}}plugins/summernote/summernote-bs4.min.css">
    <!-- DataTables -->
@@ -30,6 +33,11 @@
   <link rel="stylesheet" href="{{asset('/')}}plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="{{asset('/')}}plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <link rel="stylesheet" href="{{asset('/')}}dist/css/adminlte.min.css">
+   <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="{{asset('/')}}plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="{{asset('/')}}plugins/toastr/toastr.min.css">
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -202,7 +210,7 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{ Auth::user()->email }}</a>
         </div>
       </div>
 
@@ -228,6 +236,29 @@
              <p>POS</p>
             </a>
             
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Authentication
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('user') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage User</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Roll Configuration</p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -262,15 +293,27 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/forms/general.html" class="nav-link">
+                <a href="{{ route('generics') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>General Elements</p>
+                  <p>Generics</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('strength') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Strength</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('medicineType') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Medicine Type</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="pages/forms/validation.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Validation</p>
+                  <p>Medicine</p>
                 </a>
               </li>
             </ul>
@@ -404,9 +447,9 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/tables/simple.html" class="nav-link">
+                <a href="{{ route('doctors') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Simple Tables</p>
+                  <p>Manage Doctors</p>
                 </a>
               </li>
             </ul>

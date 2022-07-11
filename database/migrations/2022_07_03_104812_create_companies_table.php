@@ -17,12 +17,12 @@ class CreateCompaniesTable extends Migration
              $table->increments('id');
             $table->string('name',240);
             $table->string('title',100);
-            $table->string('description',500);
+            $table->string('description',500)->nullable();
             $table->string('address',200);
-            $table->string('city',200);
+            $table->string('city',200)->nullable();
             $table->string('state',200)->nullable();
             $table->string('post_code',200)->nullable();;
-            $table->string('country',100);
+            $table->string('country',100)->nullable();
             $table->string('phone',200)->nullable();;
             $table->string('email',190)->unique()->nullable();
             $table->string('website',190)->nullable();
