@@ -51,7 +51,7 @@ class GenericController extends Controller
                 $output .= '<tr>
                 <td>'.$row->id.'</td>
                 <td>'.$row->name.'</td>
-                <td>'.$row->status.'</td>
+                <td>'.$row->status .'</td>
                 <td>
                   <a href="#" id="' . $row->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editGenericModal"> <i class="fa fa-edit"></i></a>
 
