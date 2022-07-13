@@ -7,20 +7,20 @@
 	      <div class="container-fluid">
 	        <div class="row mb-2">
 	          <div class="col-sm-6">
-	            <h1>Doctor List</h1>
+	            <h1>Shelf List</h1>
 	          </div>
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
 	              <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-	              <li class="breadcrumb-item active">Doctor List</li>
+	              <li class="breadcrumb-item active">Shelf List</li>
 	            </ol>
 	          </div>
 	        </div>
 	      </div><!-- /.container-fluid -->
     </section>
 
-    @include('Doctor.modals.addDoctor')
-	@include('Doctor.modals.editDoctor')
+    @include('Shelf.modals.addShelf')
+	@include('Shelf.modals.editShelf')
 
     <section class="content">
       <div class="container-fluid">
@@ -29,10 +29,10 @@
 
             <div class="card">
               <div class="card-header">
-                <button class="card-title btn btn-info btn-sm" data-toggle="modal" data-target="#addDoctorModal"><i class="fa fa-plus"></i>Add Doctor</button>
+                <button class="card-title btn btn-info btn-sm" data-toggle="modal" data-target="#addShelfModal"><i class="fa fa-plus"></i>Add Shelf</button>
               </div>
               <!-- /.card-header -->
-              <div class="card-body" id="show_all_doctors">
+              <div class="card-body" id="show_all_Shelf">
                 
               </div>
               <!-- /.card-body -->
@@ -76,33 +76,33 @@
 
     <script type="text/javascript">
     	
-    	// Get All Doctor function acll
-    	fetchAllDoctors();
+    	// Get All Shelf function acll
+    	fetchAllShelfs();
 
-    	// Get All Doctor function
-		function fetchAllDoctors(){
+    	// Get All Shelf function
+		function fetchAllShelfs(){
 		$.ajax({
-		url: '{{ route('allDoctors') }}',
+		url: '{{ route('allShelf') }}',
 		method: 'get',
 		success: function(res){
-		$("#show_all_doctors").html(res);
+		$("#show_all_Shelf").html(res);
 
 		$("table").DataTable({
 		      "responsive": true, "lengthChange": false, "autoWidth": false,
 		      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-		    }).buttons().container().appendTo('#getAllDoctor_wrapper .col-md-6:eq(0)');
+		    }).buttons().container().appendTo('#getAllShelf_wrapper .col-md-6:eq(0)');
 
 		}
 		});
 		}
 
-		// Add Doctor Code
-	$("#add_doctor_form").submit(function(e){
+		// Add Shelf Code
+	$("#add_Shelf_form").submit(function(e){
 	e.preventDefault();
 	const fd = new FormData(this);
-	$("#add_doctor_btn").text('Adding...');
+	$("#add_Shelf_btn").text('Adding...');
 	$.ajax({
-	url: '{{ route('save.doctor') }}',
+	url: '{{ route('save.Shelf') }}',
 	method: 'post',
 	data: fd,
 	cache: false,
@@ -111,22 +111,22 @@
 	success: function(res){
 	if(res.status == 200){
 		alert("Data Save Successfully");
-		fetchAllDoctors();
+		fetchAllShelfs();
 	}
-	$("#add_doctor_btn").text('SAVE');
-	$("#add_doctor_form")[0].reset();
-	$("#addDoctorModal").modal('hide');
+	$("#add_Shelf_btn").text('SAVE');
+	$("#add_Shelf_form")[0].reset();
+	$("#addShelfModal").modal('hide');
 	}
 
 	});
 	});
 
-		//Edit Icon click for Doctor Edit
+		//Edit Icon click for Shelf Edit
 		$(document).on('click', '.editIcon', function(e){
 		e.preventDefault();
 		let id = $(this).attr('id');
 		$.ajax({
-		url: '{{ route('edit.doctor') }}',
+		url: '{{ route('edit.Shelf') }}',
 		method: 'get',
 		data: {
 		id: id,
@@ -134,23 +134,20 @@
 		},
 		success: function(res){
 			console.log(res);
-			$("#doctor_id").val(res.id);
-			$("#full_name").val(res.full_name);
-			$("#email").val(res.email);
-			$("#phone").val(res.phone);
-			$("#address").val(res.address);
-			$("#degrees").val(res.degrees);			
+			$("#shelf_id").val(res.id);
+			$("#name").val(res.name);
+			$("#details").val(res.details);		
 		}
 		});
 		});
 
-		// update Doctor ajax request
-	$("#edit_doctor_form").submit(function(e) {
+		// update Shelf ajax request
+	$("#edit_shelf_form").submit(function(e) {
 	e.preventDefault();
 	const fd = new FormData(this);
-	$("#edit_doctor_btn").text('Updating...');
+	$("#edit_shelf_btn").text('Updating...');
 		$.ajax({
-			url: '{{ route('update.doctor') }}',
+			url: '{{ route('update.Shelf') }}',
 			method: 'post',
 			data: fd,
 			cache: false,
@@ -160,16 +157,16 @@
 		success: function(response) {
 			if (response.status == 200) {
 				alert("Update Successfully");
-				fetchAllDoctors();
+				fetchAllShelfs();
 			}
-			$("#edit_doctor_btn").text('Update');
-			$("#edit_doctor_form")[0].reset();
-			$("#editdoctorModal").modal('hide');
+			$("#edit_shelf_btn").text('Update');
+			$("#edit_shelf_form")[0].reset();
+			$("#editShelfModal").modal('hide');
 			}
 		});
 	});
 
-	// delete Doctor ajax request
+	// delete Shelf ajax request
 	$(document).on('click', '.deleteIcon', function(e) {
 		e.preventDefault();
 		let id = $(this).attr('id');
@@ -185,7 +182,7 @@
 		}).then((result) => {
 		if (result.isConfirmed) {
 		$.ajax({
-			url: '{{ route('delete.doctor') }}',
+			url: '{{ route('delete.Shelf') }}',
 			method: 'delete',
 			data: {
 			id: id,
@@ -198,7 +195,7 @@
 			'Your file has been deleted.',
 			'success'
 			)
-			fetchAllDoctors();
+			fetchAllShelfs();
 		}
 		});
 		}
@@ -206,17 +203,4 @@
 	});
     </script>
 
-    <script>
-    	$(function () {
-
-    		$('.select2').select2()
-
-    		//Date picker
-		    $('#reservationdate').datetimepicker({
-		        format: 'L'
-		    });
-
-
-    	})
-    </script>
 @endpush

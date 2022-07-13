@@ -17,8 +17,8 @@ class EmployeeSeeder extends Seeder
     {
         DB::table('employees')->insert([
             'company_id' => 1,
-            'first_name' => 'super',
-            'last_name' => 'admin',
+            'first_name' => 'Super',
+            'last_name' => 'Admin',
             'full_name' => 'Super Admin',
             'email' => 'info@pharmacy.com',
             'address' => 'Dhaka-1215',

@@ -18,7 +18,7 @@ class CompanySeeder extends Seeder
         DB::table('companies')->insert([
             'name' => 'Your Pharmacy',
             'title' => 'Your Pharmacy',
-            'description' => '',
+            'description' => 'This is description',
             'address' => 'Dhaka-1215',
             'city' => 'Dhaka',
             'state' => 'Dhaka',

@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Common\DoctorController;
+use App\Http\Controllers\Common\ShelfController;
 use App\Http\Controllers\Medicine\GenericController;
 use App\Http\Controllers\Medicine\StrengthController;
 use App\Http\Controllers\Medicine\MedicineTypeController;
@@ -102,4 +103,15 @@ Route::get('/manageMedicineType', [MedicineTypeController::class, 'index'])->nam
 	Route::delete('/deleteMedicineType', [MedicineTypeController::class, 'delete'])->name('delete.medicineType');
 	Route::get('/editMedicineType', [MedicineTypeController::class, 'edit'])->name('edit.medicineType');
 	Route::post('/updateMedicineType', [MedicineTypeController::class, 'update'])->name('update.medicineType');
+});
+
+// Shelf Route
+Route::group(['middleware' => ['auth']], function () {
+	
+	Route::get('/manageShelf', [ShelfController::class, 'index'])->name('shelf');
+	Route::get('/allShelf', [ShelfController::class, 'getAllShelf'])->name('allShelf');
+	Route::post('/saveShelf', [ShelfController::class, 'create'])->name('save.Shelf');
+	Route::delete('/deleteShelf', [ShelfController::class, 'delete'])->name('delete.Shelf');
+	Route::get('/editShelf', [ShelfController::class, 'edit'])->name('edit.Shelf');
+	Route::post('/updateShelf', [ShelfController::class, 'update'])->name('update.Shelf');
 });

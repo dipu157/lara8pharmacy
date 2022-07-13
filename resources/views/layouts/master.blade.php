@@ -240,6 +240,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{ route('shelf') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Shelf</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="pages/forms/validation.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Medicine</p>
