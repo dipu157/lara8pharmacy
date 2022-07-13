@@ -81,6 +81,7 @@ class EmployeeController extends Controller
             'company_id' => $this->company_id,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
+            'full_name' => $request->first_name." ".$request->last_name,
             'email' => $request->email,
             'mobile' => $request->mobile,
             'dob' => Carbon::createFromFormat('d/m/Y',$request['dob'])->format('Y-m-d'),
@@ -112,6 +113,7 @@ class EmployeeController extends Controller
 
         $fileName = '';
         $emp = Employee::find($request->id);
+
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
@@ -126,6 +128,7 @@ class EmployeeController extends Controller
         $empData = [
             'first_name' => $request->first_name, 
             'last_name' => $request->last_name, 
+            'full_name' => $request->first_name." ".$request->last_name,
             'email' => $request->email, 
             'mobile' => $request->mobile, 
             'dob' => $request->dob, 
@@ -143,12 +146,54 @@ class EmployeeController extends Controller
         ]);
     }
 
+    public function updateEmployee(Request $request) {
+
+        $fileName = '';
+        $emp = Employee::find($request->id);
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/images', $fileName);
+            if ($emp->photo) {
+                Storage::delete('public/images/' . $emp->photo);
+            }
+        } else {
+            $fileName = $request->emp_photo;
+        }
+
+        $empData = [
+            'first_name' => $request->first_name, 
+            'last_name' => $request->last_name, 
+            'full_name' => $request->first_name." ".$request->last_name,
+            'email' => $request->email, 
+            'mobile' => $request->mobile, 
+            'dob' => $request->dob, 
+            'gender' => $request->gender, 
+            'national_id' => $request->national_id, 
+            'address' => $request->address, 
+            'blood_group' => $request->blood_group, 
+            'last_education' => $request->last_education, 
+            'photo' => $fileName
+        ];
+
+        $emp->update($empData);
+        return redirect('updateProfile')->with('status', 'Profile updated!');
+    }
+
     public function delete(Request $request) {
         $id = $request->id;
         $emp = Employee::find($id);
         if (Storage::delete('public/images/' . $emp->photo)) {
             Employee::destroy($id);
         }
+    }
+
+    public function profileUpdate(Request $request){
+
+        $id = Auth()->user()->id;
+        $emp = Employee::find($id);
+        return view('User.updateProfile',compact('emp'));
     }
 
 }

@@ -206,15 +206,8 @@
     </script>
 
     <script>
-    	$(function () {
-
-    		$('.select2').select2();
-
-    		//Initialize Select2 Elements
-		    $('.select2bs4').select2({
-		      theme: 'bootstrap4'
-		    });
-
-    	})
+    	$('#employee_id').on('change', function() {
+             $('#emp_name').val($(this).val()); 
+          });
     </script>
 @endpush

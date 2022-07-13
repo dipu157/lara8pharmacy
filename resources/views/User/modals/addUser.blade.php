@@ -20,14 +20,8 @@
                         <div class="input-group mb-3">
                           {!! Form::select('employee_id',$employees,null,array('id'=>'employee_id','class'=>'form-control','name'=>'employee_id')) !!}
                         </div>
-                        {{-- <div class="input-group mb-3">
-                          <input type="text" class="form-control" placeholder="Name" name="name" value="{{ old('name') }}" required>
-                          <div class="input-group-append">
-                            <div class="input-group-text">
-                              <span class="fas fa-user"></span>
-                            </div>
-                          </div>
-                        </div> --}}
+
+                        <input type="hidden" name="name" id="emp_name">
 
                         <div class="input-group mb-3">
                           <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" name="email" value="{{ old('email') }}" required>

@@ -103,11 +103,11 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header">Update User Profile</span>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
+          <a href="{{ route('profile') }}" class="dropdown-item">
             <i class="fas fa-user mr-2"></i>Update Profile
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
+          <a href="{{ route('changePassword') }}" class="dropdown-item">
             <i class="fas fa-key mr-2"></i> Change Password
           </a>
           <div class="dropdown-divider"></div>
@@ -139,7 +139,7 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          <a href="#" class="d-block">{{ Auth::user()->employee->full_name }} <br> {{ Auth::user()->role->name }}</a>
         </div>
       </div>
 
@@ -161,7 +161,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="./index.html" class="nav-link active">
+            <a href="#" class="nav-link active">
              <p>POS</p>
             </a>
             

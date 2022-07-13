@@ -232,8 +232,6 @@
 		    $('#reservationdate').datetimepicker({
 		        format: 'L'
 		    });
-
-
-    	})
+    	});
     </script>
 @endpush

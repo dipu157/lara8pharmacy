@@ -48,10 +48,11 @@ class StrengthController extends Controller
             </thead>
             <tbody>';
             foreach ($strength as $row) {
+                $status = ($row->status == 1) ? "Active"  :  "In-Active";
                 $output .= '<tr>
                 <td>'.$row->id.'</td>
                 <td>'.$row->strength.'</td>
-                <td>'.$row->status.'</td>
+                <td>'.$status.'</td>
                 <td>
                   <a href="#" id="' . $row->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editStrengthModal"> <i class="fa fa-edit"></i></a>
 
