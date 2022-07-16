@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Accounts;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Accounts\Expense;
+use App\Models\Accounts\Accounts;
+use App\Models\Common\Payment_Type;
+use Carbon\Carbon;
 use Auth;
 
 class ExpenseController extends Controller
@@ -23,7 +26,86 @@ class ExpenseController extends Controller
 
     public function index()
     {
+        $payment_type = Payment_Type::query()->where('company_id',$this->company_id)->pluck('payment_method','id');
 
-       return view('Accounts.Expense.otherExpenseIndex');
+       return view('Accounts.Expense.otherExpenseIndex',compact('payment_type'));
+    }
+
+    public function fetchAll()
+    {
+        $expenses = Expense::all();
+        $output = '';
+        if($expenses->count() > 0){
+            $output .= '<table id="getAllExpense" class="table table-striped table-sm text-center align-middle">
+            <thead>
+                <tr>
+                    <th>SL</th>
+                    <th>Purpose</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody>';
+            foreach ($expenses as $row) {
+                $output .= '<tr>
+                <td>'.$row->id.'</td>
+                <td>'.$row->purpose.'</td>
+                <td>'.$row->description.'</td>
+                <td>'.$row->amount.'</td>
+                <td>'.$row->date.'</td>
+                <td>
+                  <a href="#" id="' . $row->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editExpenseModal"><i class="fa fa-edit"></i></a>
+                </td>
+              </tr>';
+            }
+            $output .= '</tbody></table>';
+            echo $output;
+        }else{
+            echo '<h1 class="text-center text-secondary my-5">No Record Found in Database</h1>';
+        }
+    }
+
+    public function create(Request $request)
+    {
+        $data = [
+            'company_id' => $this->company_id,
+            'purpose' => $request->purpose,
+            'payment_type_id' => $request->payment_type_id,
+            'description' => $request->description,
+            'amount' => $request->amount,
+            'date' => Carbon::createFromFormat('d/m/Y',$request['date'])->format('Y-m-d'),
+            'user_id' => $this->user_id,
+        ];
+
+        Expense::create($data);
+
+        $open_balance = Accounts::query()
+                        ->where('company_id',1)
+                        ->latest('id')->first();
+
+        // dd($open_balance);
+
+        $expense = Expense::query()
+                        ->where('company_id',1)
+                        ->latest('id')->first();
+        //dd($Expense);
+
+        $data1 = [
+            'company_id' => $this->company_id,
+            'opening_balance' => 0,
+            'cash_in_hand' => $open_balance->cash_in_hand - $expense->amount,
+            'cash_out' => $expense->amount,
+            'other_expense_id' => $expense->id,
+            'user_id' => $this->user_id,
+        ];
+
+        Accounts::create($data1);
+
+
+        return response()->json([
+            'status' => 200
+        ]);
     }
 }

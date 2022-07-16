@@ -22,7 +22,7 @@ class CreateOtherExpenseTable extends Migration
             $table->foreign('payment_type_id')->references('id')->on('payment_types')->onDelete('RESTRICT');
             $table->string('description',240)->nullable();
             $table->decimal('amount',15,2);
-            $table->date('dob')->nullable();
+            $table->date('date')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT');
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));

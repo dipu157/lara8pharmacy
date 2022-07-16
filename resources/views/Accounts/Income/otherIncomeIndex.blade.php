@@ -31,7 +31,7 @@
                 <button class="card-title btn btn-info btn-sm" data-toggle="modal" data-target="#addOtherIncomeModal"><i class="fa fa-plus"></i>Add Other Income</button>
               </div>
               <!-- /.card-header -->
-              <div class="card-body">
+              <div class="card-body" id="show_all_otherIncome">
 
               </div>
               <!-- /.card-body -->
@@ -56,14 +56,33 @@
 
     <script type="text/javascript">
 
+    // Get All Income function acll
+    fetchAllIncomes();
+
+    // Get All Income function
+    function fetchAllIncomes(){
+    $.ajax({
+    url: '{{ route('allIncomes') }}',
+    method: 'get',
+    success: function(res){
+    $("#show_all_otherIncome").html(res);
+
+    $("table").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#getAllIncome_wrapper .col-md-6:eq(0)');
+
+    }
+    });
+    }
 
 		// Add Other Income
-	$("#add_openBalance_form").submit(function(e){
+	$("#add_income_form").submit(function(e){
 	e.preventDefault();
 	const fd = new FormData(this);
-	$("#add_openBalance_btn").text('Adding...');
+	$("#add_income_btn").text('Adding...');
 	$.ajax({
-	url: '{{ route('save.openBalance') }}',
+	url: '{{ route('save.otherIncome') }}',
 	method: 'post',
 	data: fd,
 	cache: false,
@@ -72,19 +91,15 @@
 	success: function(res){
 	if(res.status == 200){
 		alert("Data Save Successfully");
+        fetchAllIncomes();
 	}
-	$("#add_openBalance_btn").text('SAVE');
-	$("#add_openBalance_form")[0].reset();
-	$("#addOpeningBalanceModal").modal('hide');
+	$("#add_income_btn").text('SAVE');
+	$("#add_income_form")[0].reset();
+	$("#addOtherIncomeModal").modal('hide');
 	}
 
 	});
 	});
-
-    $('#opening_balance').on('keyup', function() {
-        $('#cash_in_hand').val($(this).val());
-        $('#closing_balance').val($(this).val());
-    });
 
     //Date picker
     $('#reservationdate').datetimepicker({

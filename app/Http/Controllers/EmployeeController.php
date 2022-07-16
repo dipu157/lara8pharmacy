@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Common\Company;
 use App\Models\Common\Employee;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Auth;
@@ -48,7 +45,7 @@ class EmployeeController extends Controller
             foreach ($emps as $emp) {
                 $output .= '<tr>
                 <td>'.$emp->id.'</td>
-                <td><img src="storage/images/'.$emp->photo.'" width="50" 
+                <td><img src="storage/images/'.$emp->photo.'" width="50"
                 class="img-thumbnail"></td>
                 <td>'. $emp->first_name.' '.$emp->last_name. '</td>
                 <td>'.$emp->mobile.'</td>
@@ -126,17 +123,17 @@ class EmployeeController extends Controller
         }
 
         $empData = [
-            'first_name' => $request->first_name, 
-            'last_name' => $request->last_name, 
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'full_name' => $request->first_name." ".$request->last_name,
-            'email' => $request->email, 
-            'mobile' => $request->mobile, 
-            'dob' => $request->dob, 
-            'gender' => $request->gender, 
-            'national_id' => $request->national_id, 
-            'address' => $request->address, 
-            'blood_group' => $request->blood_group, 
-            'last_education' => $request->last_education, 
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+            'dob' => $request->dob,
+            'gender' => $request->gender,
+            'national_id' => $request->national_id,
+            'address' => $request->address,
+            'blood_group' => $request->blood_group,
+            'last_education' => $request->last_education,
             'photo' => $fileName
         ];
 
@@ -163,17 +160,17 @@ class EmployeeController extends Controller
         }
 
         $empData = [
-            'first_name' => $request->first_name, 
-            'last_name' => $request->last_name, 
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'full_name' => $request->first_name." ".$request->last_name,
-            'email' => $request->email, 
-            'mobile' => $request->mobile, 
-            'dob' => $request->dob, 
-            'gender' => $request->gender, 
-            'national_id' => $request->national_id, 
-            'address' => $request->address, 
-            'blood_group' => $request->blood_group, 
-            'last_education' => $request->last_education, 
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+            'dob' => $request->dob,
+            'gender' => $request->gender,
+            'national_id' => $request->national_id,
+            'address' => $request->address,
+            'blood_group' => $request->blood_group,
+            'last_education' => $request->last_education,
             'photo' => $fileName
         ];
 

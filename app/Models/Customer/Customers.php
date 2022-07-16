@@ -20,7 +20,7 @@ class Customers extends Model
         'email',
         'address',
         'phone',
-        'customer_code',
+        'customer_type',
         'barcode',
         'regular_discount',
         'special_discount',

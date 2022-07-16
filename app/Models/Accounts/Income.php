@@ -19,6 +19,7 @@ class Income extends Model
         'payment_type_id',
         'description',
         'amount',
+        'date',
         'user_id',
     ];
 }

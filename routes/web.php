@@ -12,6 +12,8 @@ use App\Http\Controllers\Medicine\MedicineTypeController;
 use App\Http\Controllers\Accounts\AccountsController;
 use App\Http\Controllers\Accounts\IncomeController;
 use App\Http\Controllers\Accounts\ExpenseController;
+use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\Customer\Customer_ledgerController;
 use Illuminate\Routing\RouteGroup;
 
 /*
@@ -120,15 +122,32 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/updateShelf', [ShelfController::class, 'update'])->name('update.Shelf');
 });
 
-// Income-Expense Route
+// Accounts/Income-Expense Route
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/openingBalanceIndex', [AccountsController::class, 'index'])->name('openingBalance');
     Route::post('/openingBalanceSave', [AccountsController::class, 'create'])->name('save.openBalance');
 
 	Route::get('/otherIncomeIndex', [IncomeController::class, 'index'])->name('otherIncome');
+	Route::get('/getAllIncomes', [IncomeController::class, 'fetchAll'])->name('allIncomes');
+	Route::post('/otherIncomeCreate', [IncomeController::class, 'create'])->name('save.otherIncome');
 
     Route::get('/otherExpenseIndex', [ExpenseController::class, 'index'])->name('otherExpense');
+    Route::get('/getAllExpense', [ExpenseController::class, 'fetchAll'])->name('allExpenses');
+    Route::post('/otherExpenseCreate', [ExpenseController::class, 'create'])->name('save.otherExpense');
+});
+
+// Customer Route
+Route::group(['middleware' => ['auth']], function () {
+
+	Route::get('/manageCustomer', [CustomerController::class, 'index'])->name('customerIndex');
+	Route::get('/allCustomer', [CustomerController::class, 'getAllCustomer'])->name('allCustomers');
+	// Route::post('/saveCustomer', [CustomerController::class, 'create'])->name('save.Customer');
+	// Route::delete('/deleteCustomer', [CustomerController::class, 'delete'])->name('delete.Customer');
+	// Route::get('/editCustomer', [CustomerController::class, 'edit'])->name('edit.Customer');
+	// Route::post('/updateCustomer', [CustomerController::class, 'update'])->name('update.Customer');
+
+    Route::get('/customerLedger', [Customer_ledgerController::class, 'index'])->name('customerLedger');
 });
 
 

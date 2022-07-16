@@ -70,8 +70,6 @@ class DoctorController extends Controller
 
     public function create(Request $request)
     {
-
-
         $data = [
             'company_id' => $this->company_id,
             'full_name' => $request->name,

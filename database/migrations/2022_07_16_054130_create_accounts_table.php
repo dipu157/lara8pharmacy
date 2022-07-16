@@ -19,9 +19,9 @@ class CreateAccountsTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('RESTRICT');
             $table->decimal('opening_balance',15,2)->default(0);
             $table->decimal('cash_in_hand',15,2)->default(0);
-            $table->decimal('cash_in',15,2)->default(0);
-            $table->decimal('cash_out',15,2)->default(0);
-            $table->decimal('closing_balance',15,2)->default(0);
+            $table->decimal('cash_in',15,2)->default(0)->nullable();
+            $table->decimal('cash_out',15,2)->default(0)->nullable();
+            $table->decimal('closing_balance',15,2)->default(0)->nullable();
             $table->integer('other_income_id')->unsigned()->nullable();
             $table->foreign('other_income_id')->references('id')->on('other_incomes')->onDelete('RESTRICT');
             $table->integer('other_expense_id')->unsigned()->nullable();

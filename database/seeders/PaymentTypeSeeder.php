@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use DB;
 
 class PaymentTypeSeeder extends Seeder
 {
@@ -16,25 +17,29 @@ class PaymentTypeSeeder extends Seeder
         DB::table('payment_types')->insert([
             'company_id' => 1,
             'payment_method' => 'Cash',
-            'status' => true
+            'status' => true,
+            'user_id' => 1
         ]);
 
         DB::table('payment_types')->insert([
             'company_id' => 1,
             'payment_method' => 'Credit',
-            'status' => true
+            'status' => true,
+            'user_id' => 1
         ]);
 
         DB::table('payment_types')->insert([
             'company_id' => 1,
             'payment_method' => 'Card',
-            'status' => true
+            'status' => true,
+            'user_id' => 1
         ]);
 
         DB::table('payment_types')->insert([
             'company_id' => 1,
             'payment_method' => 'Bank',
-            'status' => true
+            'status' => true,
+            'user_id' => 1
         ]);
     }
 }

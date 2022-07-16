@@ -141,9 +141,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/tables/simple.html" class="nav-link">
+                <a href="{{ route('customerIndex') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Simple Tables</p>
+                  <p>Manage Customer</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('customerLedger') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Customer Ledger</p>
                 </a>
               </li>
             </ul>
