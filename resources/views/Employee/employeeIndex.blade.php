@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-	
+
 	<div class="content-wrapper">
 		<section class="content-header">
 	      <div class="container-fluid">
@@ -11,7 +11,7 @@
 	          </div>
 	          <div class="col-sm-6">
 	            <ol class="breadcrumb float-sm-right">
-	              <li class="breadcrumb-item"><a href="#">Home</a></li>
+	              <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
 	              <li class="breadcrumb-item active">Employee List</li>
 	            </ol>
 	          </div>
@@ -33,7 +33,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body" id="show_all_employees">
-                
+
               </div>
               <!-- /.card-body -->
             </div>
@@ -53,29 +53,10 @@
 
 @push('scripts')
 
-<script src="{{asset('/')}}plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="{{asset('/')}}plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{asset('/')}}plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="{{asset('/')}}plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="{{asset('/')}}plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="{{asset('/')}}plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="{{asset('/')}}plugins/jszip/jszip.min.js"></script>
-<script src="{{asset('/')}}plugins/pdfmake/pdfmake.min.js"></script>
-<script src="{{asset('/')}}plugins/pdfmake/vfs_fonts.js"></script>
-<script src="{{asset('/')}}plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="{{asset('/')}}plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="{{asset('/')}}plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('/')}}dist/js/adminlte.min.js"></script>
-<!-- Select2 -->
-<script src="{{asset('/')}}plugins/select2/js/select2.full.min.js"></script>
-<!-- SweetAlert2 -->
-<script src="{{asset('/')}}plugins/sweetalert2/sweetalert2.min.js"></script>
-<!-- Toastr -->
-<script src="{{asset('/')}}plugins/toastr/toastr.min.js"></script>
+@include('assets.js.themejs')
 
     <script type="text/javascript">
-    	
+
     	// Get All employee function acll
     	fetchAllEmployees();
 
@@ -152,7 +133,7 @@
 			$("#emp_email").val(res.email);
 			$("input[name=gender][value=" + res.gender + "]").prop('checked', true);
 			$("#emp_national_id").val(res.national_id);
-			$("#emp_address").val(res.address);			
+			$("#emp_address").val(res.address);
 			$("#emp_last_education").val(res.last_education);
 			$("#emp_img").html(`<img src="storage/images/${res.photo}" width="100" class="img-fluid img-thumbnail">`);
 			$("#emp_id").val(res.id);
