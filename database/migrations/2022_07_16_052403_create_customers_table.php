@@ -23,7 +23,6 @@ class CreateCustomersTable extends Migration
             $table->string('address',240)->nullable();
             $table->string('phone',150)->nullable();
             $table->string('customer_type');
-            $table->string('barcode')->nullable();
             $table->string('regular_discount',30)->nullable();
             $table->string('special_discount',30)->nullable();
             $table->boolean('status')->default(1);

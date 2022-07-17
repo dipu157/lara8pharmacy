@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Common\Company;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 use Hash;
 
@@ -30,7 +31,7 @@ class HomeController extends Controller
         $company_info = Company::query()
         ->where('status',true)
         ->get();
-        
+
         //dd($company_info);
 
     	return view('templateSettings',compact('company_info'));
@@ -43,7 +44,35 @@ class HomeController extends Controller
              'address' => 'required',
         ]);
 
-        Company::find($request['id'])->update($request->all());
+        $fileName = '';
+        $company = Company::find($request['id']);
+
+        if ($request->hasFile('logo_img')) {
+            $file = $request->file('logo_img');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/images', $fileName);
+            if ($company->logo_img) {
+                Storage::delete('public/images/' . $company->logo_img);
+            }
+        } else {
+            $fileName = $request->company_photo;
+        }
+
+        $companyData = [
+            'name' => $request->name,
+            'title' => $request->title,
+            'description' => $request->description,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'website' => $request->website,
+            'logo_img' => $fileName
+        ];
+
+      //  dd($companyData);
+
+        $company->update($companyData);
+
         return redirect()->back();
     }
 

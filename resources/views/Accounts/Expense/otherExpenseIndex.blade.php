@@ -90,7 +90,7 @@
 	contentType: false,
 	success: function(res){
 	if(res.status == 200){
-		alert("Data Save Successfully");
+        toastr.success('Data Save Successfully');
         fetchAllExpenses();
 	}
 	$("#add_Expense_btn").text('SAVE');

@@ -91,13 +91,20 @@
 	contentType: false,
 	success: function(res){
 	if(res.status == 200){
-		alert("Data Save Successfully");
+        toastr.success('Data Save Successfully');
 		fetchAllDoctors();
 	}
 	$("#add_doctor_btn").text('SAVE');
 	$("#add_doctor_form")[0].reset();
 	$("#addDoctorModal").modal('hide');
-	}
+	},
+      error: function (res) {
+        toastr.error('Data Save Failed');
+        fetchAllDoctors();
+        $("#add_doctor_btn").text('SAVE');
+        $("#add_doctor_form")[0].reset();
+        $("#addDoctorModal").modal('hide');
+      }
 
 	});
 	});
@@ -140,9 +147,12 @@
 			dataType: 'json',
 		success: function(response) {
 			if (response.status == 200) {
-				alert("Update Successfully");
+                toastr.success('Update Successfully');
 				fetchAllDoctors();
-			}
+			}else{
+                toastr.error('Update Failed');
+				fetchAllDoctors();
+            }
 			$("#edit_doctor_btn").text('Update');
 			$("#edit_doctor_form")[0].reset();
 			$("#editdoctorModal").modal('hide');

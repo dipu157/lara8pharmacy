@@ -91,7 +91,7 @@
 	contentType: false,
 	success: function(res){
 	if(res.status == 200){
-		alert("Data Save Successfully");
+		toastr.success('Data Save Successfully');
 		fetchAllShelfs();
 	}
 	$("#add_Shelf_btn").text('SAVE');
@@ -137,7 +137,7 @@
 			dataType: 'json',
 		success: function(response) {
 			if (response.status == 200) {
-				alert("Update Successfully");
+				toastr.success('Update Successfully');
 				fetchAllShelfs();
 			}
 			$("#edit_shelf_btn").text('Update');

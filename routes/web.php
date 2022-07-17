@@ -28,14 +28,18 @@ use Illuminate\Routing\RouteGroup;
 */
 
 Route::get('/', function () { return view('auth.login'); });
-Route::view('home','dashboard')->middleware('auth');
 
-Route::get('/home', function () { return view('dashboard');})->name('home')->middleware('auth');
-Route::get('/passwordChange', function () { return view('auth.change-password');})->name('changePassword')->middleware('auth');
-Route::post('/updatePass', [HomeController::class, 'updatePassword'])->name('updatePass');
-Route::get('/settings', [HomeController::class, 'templateSettings'])->name('company')->middleware('auth');
-Route::post('/settingsEdit', [HomeController::class, 'editSettings'])->name('editCompany')->middleware('auth');
 
+// Common Route
+Route::group(['middleware' => ['auth']], function () {
+    Route::view('home','dashboard');
+
+    Route::get('/home', function () { return view('dashboard');})->name('home');
+    Route::get('/passwordChange', function () { return view('auth.change-password');})->name('changePassword');
+    Route::post('/updatePass', [HomeController::class, 'updatePassword'])->name('updatePass');
+    Route::get('/settings', [HomeController::class, 'templateSettings'])->name('company');
+    Route::post('/settingsEdit', [HomeController::class, 'editSettings'])->name('editCompany');
+});
 
 // Employee Route
 Route::group(['middleware' => ['auth']], function () {
@@ -142,12 +146,12 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::get('/manageCustomer', [CustomerController::class, 'index'])->name('customerIndex');
 	Route::get('/allCustomer', [CustomerController::class, 'getAllCustomer'])->name('allCustomers');
-	// Route::post('/saveCustomer', [CustomerController::class, 'create'])->name('save.Customer');
-	// Route::delete('/deleteCustomer', [CustomerController::class, 'delete'])->name('delete.Customer');
-	// Route::get('/editCustomer', [CustomerController::class, 'edit'])->name('edit.Customer');
-	// Route::post('/updateCustomer', [CustomerController::class, 'update'])->name('update.Customer');
+	Route::post('/saveCustomer', [CustomerController::class, 'create'])->name('save.Customer');
+	Route::get('/editCustomer', [CustomerController::class, 'edit'])->name('edit.Customer');
+    Route::post('/updateCustomer', [CustomerController::class, 'update'])->name('update.Customer');
 
     Route::get('/customerLedger', [Customer_ledgerController::class, 'index'])->name('customerLedger');
+    Route::get('/allCustomersLedger', [Customer_ledgerController::class, 'fatchAll'])->name('allCustomersLedger');
 });
 
 

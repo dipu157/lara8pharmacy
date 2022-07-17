@@ -21,3 +21,14 @@ if (!function_exists('get_company_name')) {
     }
 
 }
+
+if (!function_exists('get_company_logo')) {
+
+    function get_company_logo($id = 1)
+    {
+        $company = \App\Models\Common\Company::find($id) ->value('logo_img');
+
+        return $company;
+    }
+
+}

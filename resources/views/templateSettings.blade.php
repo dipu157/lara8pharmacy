@@ -18,6 +18,11 @@
 	          </div>
 	        </div>
 	      </div><!-- /.container-fluid -->
+	      @if (session('status'))
+			    <div class="alert alert-success">
+			        {{ session('status') }}
+			    </div>
+			@endif
     </section>
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -40,6 +45,7 @@
 
           <form action="{{ route('editCompany') }}" method="post" enctype="multipart/form-data" accept-charset="utf-8" class="form-horizontal" >
           	@csrf
+              <input type="hidden" name="company_photo" id="company_photo" value="{{ $company_info[0]->logo_img }}">
 	            <div class="row">
 	            	<input type="hidden" name="id" value="{{ $company_info[0]->id }}">
 		              <div class="col-md-6">
@@ -48,7 +54,7 @@
 			                  <input type="text" class="form-control" name="title" value="{{ $company_info[0]->title }}" placeholder="Title">
 			                </div>
 		              </div>
-		              
+
 		               <div class="col-md-6">
 			                <div class="form-group">
 			                  <label>Name</label>
@@ -64,9 +70,9 @@
 			                  <textarea class="form-control" cols="50" rows="3" name="address">{{ $company_info[0]->address }}</textarea>
 			                </div>
 		              </div>
-		              
+
 		               <div class="col-md-6">
-			                
+
 
 			                <div class="form-group">
 			                  <label>Description</label>
@@ -93,16 +99,30 @@
 			                </div>
 
 			                <div class="form-group">
-			                  <label>Logo</label>
-			                  <input type="file" class="form-control" name="logo_img">
+			                  <label>Currency</label>
+			                  <input type="text" class="form-control" name="currency" id="currency" value="{{ $company_info[0]->currency }}">
 			                </div>
 		               </div>
+
+                       <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Logo</label>
+                                <input type="file" class="form-control" name="logo_img" id="logo_img">
+                              </div>
+                          </div>
+                          <div class="col-md-6" id="logo_img_prev">
+                            <img src="storage/images/{{ $company_info[0]->logo_img }}" width="100" class="img-fluid img-thumbnail">
+                          </div>
+                        </div>
+                     </div>
 		                <button class="btn btn-block btn-primary" type="submit">UPDATE</button>
 		        </div>
 	      </form>
 	              <!-- /.col -->
 	            </div>
-           
+
 
           </div>
         </div>

@@ -71,7 +71,7 @@
 	contentType: false,
 	success: function(res){
 	if(res.status == 200){
-		alert("Data Save Successfully");
+		toastr.success('Data Save Successfully');
 	}
 	$("#add_openBalance_btn").text('SAVE');
 	$("#add_openBalance_form")[0].reset();

@@ -81,6 +81,7 @@ class DoctorController extends Controller
         ];
 
         Doctor::create($data);
+
         return response()->json([
             'status' => 200
         ]);
@@ -107,6 +108,7 @@ class DoctorController extends Controller
         ];
 
         $doctor->update($data);
+
         return response()->json([
             'status' => 200,
         ]);

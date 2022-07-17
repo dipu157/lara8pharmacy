@@ -91,7 +91,7 @@
 	contentType: false,
 	success: function(res){
 	if(res.status == 200){
-		alert("Data Save Successfully");
+		toastr.success('Data Save Successfully');
 		fetchAllEmployees();
 	}
 	$("#add_employee_btn").text('SAVE');
@@ -157,7 +157,7 @@
 			dataType: 'json',
 		success: function(response) {
 			if (response.status == 200) {
-				alert("Update Successfully");
+                toastr.success('Update Successfully');
 				fetchAllEmployees();
 			}
 			$("#edit_employee_btn").text('Update');
@@ -207,7 +207,7 @@
     <script>
     	$(function () {
 
-    		$('.select2').select2()
+    		$('.select2').select2();
 
     		//Date picker
 		    $('#reservationdate').datetimepicker({

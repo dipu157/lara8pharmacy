@@ -23,5 +23,6 @@ class Company extends Model
         'website',
         'email',
         'phone',
+        'logo_img',
     ];
 }

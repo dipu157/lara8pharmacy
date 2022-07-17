@@ -4,6 +4,7 @@ namespace App\Models\Customer;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Customer\Customers;
 
 class Customer_ledger extends Model
 {
@@ -21,4 +22,9 @@ class Customer_ledger extends Model
         'due',
         'user_id',
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customers::class,'customer_id','id');
+    }
 }

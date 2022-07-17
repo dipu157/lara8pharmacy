@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Customer\Customers;
+use App\Models\Customer\Customer_ledger;
+use Auth;
 
 class Customer_ledgerController extends Controller
 {
@@ -18,40 +21,40 @@ class Customer_ledgerController extends Controller
         });
     }
 
-
     public function index()
+    {
+        return view('Customer.CustomerLedger.customerLedgerIndex');
+    }
+
+
+    public function fatchAll()
     {
        // echo $current = Carbon::now()->format('Y-m-d');
 
-        $emps = Employee::all();
+        $cust_ledg = Customer_ledger::all();
         $output = '';
-        if($emps->count() > 0){
-            $output .= '<table id="getAllEmployee" class="table table-striped table-sm text-center align-middle">
+        if($cust_ledg->count() > 0){
+            $output .= '<table id="getAllCustomerLedger" class="table table-striped table-sm text-center align-middle">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Photo</th>
-                    <th>Full Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Blood Group</th>
+                    <th>Customer Name</th>
+                    <th>Total Balance</th>
+                    <th>Paid</th>
+                    <th>Due</th>
                     <th>action</th>
                 </tr>
             </thead>
             <tbody>';
-            foreach ($emps as $emp) {
+            foreach ($cust_ledg as $cl) {
                 $output .= '<tr>
-                <td>'.$emp->id.'</td>
-                <td><img src="storage/images/'.$emp->photo.'" width="50"
-                class="img-thumbnail"></td>
-                <td>'. $emp->first_name.' '.$emp->last_name. '</td>
-                <td>'.$emp->mobile.'</td>
-                <td>'.$emp->email.'</td>
-                <td>'.$emp->blood_group.'</td>
+                <td>'.$cl->id.'</td>
+                <td>'. $cl->customer->name. '</td>
+                <td>'.$cl->total_balance.'</td>
+                <td>'.$cl->paid.'</td>
+                <td>'.$cl->due.'</td>
                 <td>
-                  <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="fa fa-edit"></i></a>
-
-                  <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="fa fa-trash"></i></a>
+                  <a href="#" id="' . $cl->id . '" class="text-success mx-1 printIcon"><i class="fa fa-print"></i></a>
                 </td>
               </tr>';
             }
