@@ -43,15 +43,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="{{ route('manageSupplier') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Top Navigation</p>
+                  <p>Manage Supplier</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
+                <a href="{{ route('supplierLedger') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Collapsed Sidebar</p>
+                  <p>Supplier Ledger</p>
                 </a>
               </li>
             </ul>
@@ -90,7 +90,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/forms/validation.html" class="nav-link">
+                <a href="{{ route('manageMedicine') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Medicine</p>
                 </a>

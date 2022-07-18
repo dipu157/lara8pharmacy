@@ -9,11 +9,13 @@ use App\Http\Controllers\Common\ShelfController;
 use App\Http\Controllers\Medicine\GenericController;
 use App\Http\Controllers\Medicine\StrengthController;
 use App\Http\Controllers\Medicine\MedicineTypeController;
+use App\Http\Controllers\Medicine\MedicineController;
 use App\Http\Controllers\Accounts\AccountsController;
 use App\Http\Controllers\Accounts\IncomeController;
 use App\Http\Controllers\Accounts\ExpenseController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\Customer_ledgerController;
+use App\Http\Controllers\Supplier\SupplierController;
 use Illuminate\Routing\RouteGroup;
 
 /*
@@ -154,4 +156,28 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/allCustomersLedger', [Customer_ledgerController::class, 'fatchAll'])->name('allCustomersLedger');
 });
 
+// Supplier Route
+Route::group(['middleware' => ['auth']], function () {
+
+	Route::get('/manageSupplier', [SupplierController::class, 'index'])->name('manageSupplier');
+	Route::get('/allSupplier', [SupplierController::class, 'getAllSupplier'])->name('allSuppliers');
+	Route::post('/saveSupplier', [SupplierController::class, 'create'])->name('save.Supplier');
+	Route::delete('/deleteSupplier', [SupplierController::class, 'delete'])->name('delete.Supplier');
+	Route::get('/editSupplier', [SupplierController::class, 'edit'])->name('edit.Supplier');
+	Route::post('/updateSupplier', [SupplierController::class, 'update'])->name('update.Supplier');
+
+    Route::get('/manageSupplierLedger', [SupplierController::class, 'supplierLedgerIndex'])->name('supplierLedger');
+    Route::get('/allSupplierLedger', [SupplierController::class, 'fetchAll'])->name('allSuppliersLedger');
+});
+
+
+// Medicine Route
+Route::group(['middleware' => ['auth']], function () {
+
+	Route::get('/manageMedicine', [MedicineController::class, 'index'])->name('manageMedicine');
+	Route::get('/allMedicine', [MedicineController::class, 'getAllMedicine'])->name('allMedicine');
+	Route::post('/saveMedicine', [MedicineController::class, 'create'])->name('save.Medicine');
+	Route::get('/editMedicine', [MedicineController::class, 'edit'])->name('edit.Medicine');
+	Route::post('/updateMedicine', [MedicineController::class, 'update'])->name('update.Medicine');
+});
 
