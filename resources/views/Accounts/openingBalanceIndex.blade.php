@@ -28,11 +28,16 @@
 
             <div class="card">
               <div class="card-header">
-                <button class="card-title btn btn-info btn-sm" data-toggle="modal" data-target="#addOpeningBalanceModal"><i class="fa fa-plus"></i>Add Opening Balance</button>
+                @if($open_balance->cash_in_hand == 0)
+                <button style="margin-right: 1rem;" class="card-title btn btn-info btn-sm" data-toggle="modal" data-target="#addOpeningBalanceModal"><i class="fa fa-plus"></i>Add Opening Balance</button>
+                <p style="margin-top:0.2rem; font-size:20px; text-transform: capitalize;"><mark> Once you add opening balance you can not add again. To add further you have to add from <a href="{{ route('otherIncome') }}">Other Income</a></p>
+                @else
+                <p style="margin-top:0.2rem; font-size:20px; text-transform: capitalize;"><mark> Open Balance already added. To add further you have to add from <a href="{{ route('otherIncome') }}">Other Income</a></p>
+                @endif
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-
+                <h2>Your Current Balance is {{ $current_balance->cash_in_hand }} </h2>
               </div>
               <!-- /.card-body -->
             </div>
@@ -72,6 +77,7 @@
 	success: function(res){
 	if(res.status == 200){
 		toastr.success('Data Save Successfully');
+        location.reload();
 	}
 	$("#add_openBalance_btn").text('SAVE');
 	$("#add_openBalance_form")[0].reset();

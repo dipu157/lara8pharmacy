@@ -28,8 +28,13 @@
 
             <div class="card">
               <div class="card-header">
-                <button class="card-title btn btn-info btn-sm" data-toggle="modal" data-target="#addOtherIncomeModal"><i class="fa fa-plus"></i>Add Other Income</button>
-              </div>
+
+                @if($open_balance->cash_in_hand > 0)
+                <button style="margin-right: 1rem;" class="card-title btn btn-info btn-sm" data-toggle="modal" data-target="#addOtherIncomeModal"><i class="fa fa-plus"></i>Add Other Income</button>
+                @else
+                <p style="margin-top:0.2rem; font-size:20px; text-transform: capitalize;"><mark> You did not set opening balance. first set <a href="{{ route('openingBalance') }}">Opening Balance</a></p>
+                @endif
+            </div>
               <!-- /.card-header -->
               <div class="card-body" id="show_all_otherIncome">
 
@@ -90,7 +95,7 @@
 	contentType: false,
 	success: function(res){
 	if(res.status == 200){
-		alert("Data Save Successfully");
+		toastr.success('Data Save Successfully');
         fetchAllIncomes();
 	}
 	$("#add_income_btn").text('SAVE');

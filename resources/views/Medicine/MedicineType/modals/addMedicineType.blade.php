@@ -4,7 +4,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Add New Doctor</h4>
+              <h4 class="modal-title">Add Medicine Type</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -16,16 +16,6 @@
                   <form action="#" method="post" accept-charset="utf-8" class="form-horizontal" id="add_MedicineType_form">
                       @csrf
                         <div class="input-group mb-3">
-                          <input type="text" class="form-control @error('code') is-invalid @enderror" placeholder="Code" name="code" value="{{ old('code') }}" required>
-
-                          @error('code')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                          @enderror
-
-                        </div>
-                        <div class="input-group mb-3">
                           <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name" name="name" value="{{ old('name') }}" required>
 
                           @error('name')
@@ -35,7 +25,7 @@
                           @enderror
                         </div>
 
-                        
+
                         <div class="input-group mb-3">
                           <input type="text" class="form-control @error('short_name') is-invalid @enderror" placeholder="Short Name" name="short_name" value="{{ old('short_name') }}" required>
 
@@ -56,7 +46,7 @@
                   </form>
                  </div>
               </div>
-              
+
             </div>
 
 

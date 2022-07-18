@@ -26,9 +26,12 @@ class ExpenseController extends Controller
 
     public function index()
     {
+        $open_balance = Accounts::query()
+                        ->where('company_id',1)
+                        ->latest('id')->first();
         $payment_type = Payment_Type::query()->where('company_id',$this->company_id)->pluck('payment_method','id');
 
-       return view('Accounts.Expense.otherExpenseIndex',compact('payment_type'));
+       return view('Accounts.Expense.otherExpenseIndex',compact('payment_type','open_balance'));
     }
 
     public function fetchAll()
@@ -69,43 +72,51 @@ class ExpenseController extends Controller
 
     public function create(Request $request)
     {
-        $data = [
-            'company_id' => $this->company_id,
-            'purpose' => $request->purpose,
-            'payment_type_id' => $request->payment_type_id,
-            'description' => $request->description,
-            'amount' => $request->amount,
-            'date' => Carbon::createFromFormat('d/m/Y',$request['date'])->format('Y-m-d'),
-            'user_id' => $this->user_id,
-        ];
-
-        Expense::create($data);
-
         $open_balance = Accounts::query()
                         ->where('company_id',1)
                         ->latest('id')->first();
 
-        // dd($open_balance);
+        if($open_balance->cash_in_hand >= $request->amount)
+        {
+            $data = [
+                'company_id' => $this->company_id,
+                'purpose' => $request->purpose,
+                'payment_type_id' => $request->payment_type_id,
+                'description' => $request->description,
+                'amount' => $request->amount,
+                'date' => Carbon::createFromFormat('d/m/Y',$request['date'])->format('Y-m-d'),
+                'user_id' => $this->user_id,
+            ];
 
-        $expense = Expense::query()
-                        ->where('company_id',1)
-                        ->latest('id')->first();
-        //dd($Expense);
+            Expense::create($data);
 
-        $data1 = [
+            // dd($open_balance);
+
+            $expense = Expense::query()
+            ->where('company_id',1)
+            ->latest('id')->first();
+            //dd($Expense);
+
+            $data1 = [
             'company_id' => $this->company_id,
             'opening_balance' => 0,
             'cash_in_hand' => $open_balance->cash_in_hand - $expense->amount,
             'cash_out' => $expense->amount,
             'other_expense_id' => $expense->id,
             'user_id' => $this->user_id,
-        ];
+            ];
 
-        Accounts::create($data1);
+            Accounts::create($data1);
 
-
-        return response()->json([
+            return response()->json([
             'status' => 200
-        ]);
+            ]);
+        }else{
+            return response()->json([
+                'status' => '500'
+            ]);
+        }
+
+
     }
 }

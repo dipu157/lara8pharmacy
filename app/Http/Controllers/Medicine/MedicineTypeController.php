@@ -74,7 +74,7 @@ class MedicineTypeController extends Controller
 
         $data = [
             'company_id' => $this->company_id,
-            'code' => $request->code,
+            'code' => rand(1000,2000),
             'name' => $request->name,
             'short_name' => $request->short_name,
             'user_id' => $this->user_id,
@@ -98,7 +98,7 @@ class MedicineTypeController extends Controller
         $medicine_Type = Medicine_Type::find($request->id);
         $data = [
             'company_id' => $this->company_id,
-            'code' => $request->code,
+            'code' => rand(1000,2000),
             'name' => $request->name,
             'short_name' => $request->short_name,
             'user_id' => $this->user_id,

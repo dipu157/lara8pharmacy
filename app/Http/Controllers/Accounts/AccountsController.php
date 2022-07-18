@@ -25,11 +25,14 @@ class AccountsController extends Controller
     {
         $open_balance = Accounts::query()
                         ->where('company_id',1)
-                        ->where('id',1)
-                        ->get();
+                        ->first();
+
+        $current_balance = Accounts::query()
+                        ->where('company_id',1)
+                        ->latest('id')->first();
        // dd($open_balance);
 
-       return view('Accounts.openingBalanceIndex',compact('open_balance'));
+       return view('Accounts.openingBalanceIndex',compact('open_balance','current_balance'));
     }
 
     public function create(Request $request)

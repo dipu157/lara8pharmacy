@@ -26,10 +26,13 @@ class IncomeController extends Controller
 
     public function index()
     {
+        $open_balance = Accounts::query()
+                        ->where('company_id',1)
+                        ->first();
 
         $payment_type = Payment_Type::query()->where('company_id',$this->company_id)->pluck('payment_method','id');
 
-       return view('Accounts.Income.otherIncomeIndex',compact('payment_type'));
+       return view('Accounts.Income.otherIncomeIndex',compact('payment_type','open_balance'));
     }
 
     public function fetchAll()

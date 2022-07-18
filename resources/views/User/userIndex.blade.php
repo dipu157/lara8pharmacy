@@ -29,8 +29,9 @@
 
             <div class="card">
               <div class="card-header">
-                <button class="card-title btn btn-info btn-sm" data-toggle="modal" data-target="#addUserModal"><i class="fa fa-plus"></i>Add User</button>
-              </div>
+                <button style="margin-right: 1rem;" class="card-title btn btn-info btn-sm" data-toggle="modal" data-target="#addUserModal"><i class="fa fa-plus"></i>Add User</button>
+                <p style="margin-top:0.2rem; font-size:20px; text-transform: capitalize;"><mark> To Add new user you must have to create that employee at first.<a href="{{ route('manageEmployee') }}"> GO </a> To create employee page.</mark></p>
+            </div>
               <!-- /.card-header -->
               <div class="card-body" id="show_all_users">
 

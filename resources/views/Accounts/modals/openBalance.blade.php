@@ -14,13 +14,13 @@
             <div class="card-body">
               <form action="#" method="post" accept-charset="utf-8" class="form-horizontal" id="add_openBalance_form">
                   @csrf
-                    <input type="hidden" name="id" value="{{ $open_balance[0]->id }}">
+                    <input type="hidden" name="id" value="{{ $open_balance->id }}">
 
                     <div class="input-group mb-3">
                         <div class="form-group">
                             <label>Opening Balance</label>
                       <input type="text" class="form-control @error('opening_balance') is-invalid @enderror"
-                       name="opening_balance" id="opening_balance" value="{{ $open_balance[0]->opening_balance }}" required>
+                       name="opening_balance" id="opening_balance" value="{{ $open_balance->opening_balance }}" required>
                         </div>
 
                       @error('opening_balance')
@@ -31,10 +31,10 @@
                     </div>
 
                     <input type="hidden" class="form-control" name="cash_in_hand"
-                    id="cash_in_hand" value="{{ $open_balance[0]->cash_in_hand }}" required>
+                    id="cash_in_hand" value="{{ $open_balance->cash_in_hand }}" required>
 
                     <input type="hidden" class="form-control" name="closing_balance"
-                    id="closing_balance" value="{{ $open_balance[0]->closing_balance }}" required>
+                    id="closing_balance" value="{{ $open_balance->closing_balance }}" required>
 
                     <div class="row">
                       <!-- /.col -->
