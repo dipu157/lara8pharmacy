@@ -64,6 +64,7 @@ class MedicineController extends Controller
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Supplier</th>
                     <th>Generic</th>
                     <th>Shelf</th>
                     <th>MRP</th>
@@ -77,6 +78,7 @@ class MedicineController extends Controller
                 <td>'.$row->id.'</td>
                 <td>'. $row->medicine_type->short_name.' '.$row->name.' '.$row->strength->strength. '</td>
                 <td>'.$row->generic->name.'</td>
+                <td>'.$row->supplier->name.'</td>
                 <td>'.$row->shelf->name.'</td>
                 <td>'.$row->mrp.'</td>
                 <td>'.$row->in_stock.'</td>

@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Medicine;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Common\Company;
 use App\Models\Medicine\Generic;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class GenericController extends Controller
 {

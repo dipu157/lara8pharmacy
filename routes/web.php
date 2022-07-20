@@ -16,6 +16,7 @@ use App\Http\Controllers\Accounts\ExpenseController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\Customer_ledgerController;
 use App\Http\Controllers\Supplier\SupplierController;
+use App\Http\Controllers\Purchase\PurchaseController;
 use Illuminate\Routing\RouteGroup;
 
 /*
@@ -179,5 +180,12 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/saveMedicine', [MedicineController::class, 'create'])->name('save.Medicine');
 	Route::get('/editMedicine', [MedicineController::class, 'edit'])->name('edit.Medicine');
 	Route::post('/updateMedicine', [MedicineController::class, 'update'])->name('update.Medicine');
+});
+
+// Purchase Route
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/managePurchase', [PurchaseController::class, 'index'])->name('createPurchase');
+    Route::post('/purchaseReview', [PurchaseController::class, 'purchaseReview'])->name('purchaseReview');
+    Route::get('/GetMedicineBySupplierid', [PurchaseController::class, 'medicinebysupplierId'])->name('medicineBySupplier');
 });
 

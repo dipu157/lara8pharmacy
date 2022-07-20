@@ -1,0 +1,521 @@
+
+/****************************** Form Custom*************************************************/
+.form-group {
+    margin-bottom: 5px;
+}
+table.dataTable thead .sorting:after,table.dataTable thead .sorting_asc:after,table.dataTable thead .sorting_desc:after{
+    content: none!important;
+}
+.table th, .table thead th {
+    border: 1px solid #949494;
+    background-color: #a5a5a5!important;
+    color: white;
+}
+.table td, .table th {
+    border-color: #ada3a3;
+}
+.table td, .table th {
+    padding: 2px;
+    vertical-align: top;
+    border-top: 1px solid #e9ecef;
+}
+
+.card-body {
+    padding-top: 5px;
+}
+.dataTables_wrapper {
+    padding-top: 5px;
+}
+    #fullpage .card {
+    text-align: center;
+    padding: 30px;
+    }
+
+    #fullpage .card h4.card-title {
+        font-weight: 600;
+        padding:  0;
+        margin:  0;
+        text-transform:capitalize;
+    }
+@media print{
+button#print {
+    display: none;
+}
+    #fullpage .card.card-body {
+    text-align: center;
+    padding: 15px;
+    }
+
+    #fullpage .card {
+        text-align: center!important;
+        padding: 5px 10px;
+        height:  96px;
+        width:  144px;
+        float:left;
+    }
+
+    #fullpage .card h4 {
+        font-size: 10px;
+        font-weight: 600;
+        padding:  0;
+        margin:  0;
+        line-height: 1.4;
+    }
+    #fullpage .card-body {
+        margin:  0;
+        padding:  0;
+        font-size: 10px;
+    }
+    #fullpage .card-body h4 {
+        font-size:  9px;
+        font-weight:  500;
+    }
+    #fullpage .card-body img{
+        width:124px!important;
+        height:45px!important;
+    }
+
+
+}
+
+
+
+
+
+
+/* CUSTOM CSS */
+
+.mb-15 {
+    margin-bottom: 15px;
+}
+
+@media (min-width:768px) {
+    .mini-sidebar .sidebar-nav #sidebarnav>li>ul {
+        top: 39px;
+        background: #eef5f9;
+    }
+}
+
+/* navbar top */
+.justify-center {
+    justify-content: center;
+}
+
+.barcode-img .card-body img {
+    width: 100%;
+    max-width: 100%;
+}
+
+.pos_nav_tabs {
+    background: #efefef;
+}
+.pos_nav_tabs a {
+    color: #6f6f6f;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-size: .9rem;
+  font-weight: 200;
+  font-style: italic;
+
+}
+::-moz-placeholder { /* Firefox 19+ */
+  font-size: .9rem;
+  font-weight: 200;
+  font-style: italic;
+
+}
+:-ms-input-placeholder { /* IE 10+ */
+  font-size: .9rem;
+  font-weight: 200;
+  font-style: italic;
+
+}
+:-moz-placeholder { /* Firefox 18- */
+  font-size: .9rem;
+  font-weight: 200;
+  font-style: italic;
+
+}
+
+.pos_inputs .form-control {
+    color: #67757c;
+    min-height: 30px;
+    padding: 9px 10px;
+    font-size: .8rem;
+    line-height: 1;
+    color: #495057;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0 !IMPORTANT;
+}
+
+.pos_inputs .input-group-addon {
+    padding: 5px 10px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 200;
+    line-height: 1.25;
+    color: #868e96;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0;
+}
+
+.table_custom th, .table_custom thead th {
+    border: 1px solid #e2e0e0;
+    background-color: #a5a5a500!important;
+    color: #49505780;
+    padding: 5px 10px;
+}
+
+.table_custom td, .table_custom th {
+    padding: 5px 10px;
+}
+
+.list-group-item {
+    border-radius: 0 !IMPORTANT;
+}
+
+.custom_list {
+    position: relative;
+    display: block;
+    padding: 0;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: none;
+}
+
+.custom_list .list-group-item {
+    border-radius: 0 !IMPORTANT;
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.list-group-item:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+table.pos_table input {
+    display: block;
+    width: 100%;
+    border: 0;
+    color: #67757c8f;
+}
+
+/* table head fixed fix */
+table.scroll {
+    width: 100%;
+    /* border-collapse: collapse; */
+    border-spacing: 0;
+}
+
+table.scroll tbody,
+table.scroll thead { display: block; }
+
+table.scroll tbody td,
+table.scroll thead th { width: 10%; }
+
+table.scroll tbody {
+    height: 225px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Receipt CSS */
+.pos_receipt {
+    font-family: "Merchant Copy";
+    font-size: 10px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    padding: 15px;
+}
+.pos_receipt span {
+    display: block;
+}
+.pos_receipt table {
+    width: 100%;
+}
+.pos_receipt table tr {
+    width: 100%;
+}
+.pos_receipt table td:last-child {
+    text-align: right;
+}
+.receipt_header {
+    border-bottom: 1px dashed #eee;
+}
+.company-info {
+    margin-top: 15px;
+}
+.receipt_body {
+    margin-bottom: 15px;
+}
+.medicine_name {
+    text-align: left !IMPORTANT;
+}
+.receipt_footer {
+    border-top: 1px dashed #eee;
+    border-bottom: 1px dashed #eee;
+}
+
+@media print{
+    #printArr {
+    width: 38mm;
+    height: 25mm;
+    box-shadow: none !IMPORTANT;
+    border-radius: 0 !IMPORTANT;
+    margin: 0 auto;
+    margin-top:5px;
+    background-color: #ececec;
+    text-align: center;
+    }
+    #printArr img {
+        height: 14mm;
+        width:auto;
+    }
+    #printArr p {
+        padding: 0;
+        margin: 0;
+        font-size: 10px;
+        font-weight: 400;
+        font-family: 'Helvetica Nueue', 'Lato', serif;
+        line-height:10px;
+        color:#000;
+    }
+    #printArr p.strong {
+        padding: 0;
+        margin: 0;
+        font-size: 8px;
+        font-weight: 400;
+        font-family: 'Helvetica Nueue', 'Lato', serif;
+        line-height:10px;
+        color:#000;
+    }
+    #printAr {
+    width: 38mm;
+    height: 25mm;
+    box-shadow: none !IMPORTANT;
+    border-radius: 0 !IMPORTANT;
+    margin: 0 auto;
+    margin-top:5px;
+    background-color: #ececec;
+    text-align: center;
+    }
+    #printAr img {
+        height: 14mm;
+        width:auto;
+        margin-top:-11px;
+    }
+    #printAr p {
+        padding: 0;
+        margin-top:7px;
+        font-size: 10px;
+        font-weight: 400;
+        font-family: 'Helvetica Nueue', 'Lato', serif;
+        line-height:10px;
+        color:#000;
+    }
+    #printAr p.strong {
+        padding: 0;
+        margin: 0;
+        font-size: 8px;
+        font-weight: 400;
+        font-family: 'Helvetica Nueue', 'Lato', serif;
+        line-height:10px;
+        color:#000;
+    }
+
+}
+    #printArr {
+        width: 38mm;
+        height: 25mm;
+        box-shadow: none !IMPORTANT;
+        border-radius: 0 !IMPORTANT;
+        margin: 0 auto;
+        background-color: #ececec;
+        text-align: center;
+        }
+    #printArr img {
+        height: 13mm;
+    }
+    #printArr p {
+        padding: 0;
+        margin: 0;
+        font-size: 12px;
+        font-weight: 400;
+        font-family: 'Helvetica Nueue', 'Lato', serif;
+        color:#000;
+
+    }
+    #printAr {
+        width: 38mm;
+        height: 25mm;
+        box-shadow: none !IMPORTANT;
+        border-radius: 0 !IMPORTANT;
+        margin: 0 auto;
+        background-color: #ececec;
+        text-align: center;
+        }
+    #printAr img {
+        height: 13mm;
+        margin-top:-11px;
+    }
+    #printAr p {
+        padding: 0;
+        margin-top: 7px;
+        font-size: 12px;
+        font-weight: 400;
+        font-family: 'Helvetica Nueue', 'Lato', serif;
+        color:#000;
+
+    }
+
+
+/* BARCODE */
+#barDOM {
+    width: 8.0in;
+    box-shadow: none !IMPORTANT;
+    border-radius: 0 !IMPORTANT;
+}
+
+
+/* POS Tab Index */
+#SalesForm :focus {
+    outline: 1px solid #5c5d5f;
+}
+
+/* Barcode A4 */
+.barcode-table-card {
+    padding: 0 !IMPORTANT;
+}
+.barcode-table td {
+    padding: 5px 5px;
+    border: none;
+}
+.barcode-table td img {
+    width: 100%;
+}
+.file_prev {
+    float: right;
+    overflow: hidden;
+}
+.file_prev img {
+    height: 44px;
+    width: 63px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+.file_prev.modal_prev {
+    float: right;
+    overflow: hidden;
+    display: block;
+}
+.file_prev.modal_prev img {
+    height: auto;
+    width: 100%;
+    margin-bottom: 0;
+    margin-right: 0px;
+}
+
+.topbar .nav-link {
+    padding: 0px;
+}
+.message-widget .user-img img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+@media (min-width: 768px) {
+    .mini-sidebar .sidebar-nav #sidebarnav>li>a {
+        padding: 9px 18px;
+        width: 60px;
+    }
+}
+
+.pos-remove-spacing div[class^='col-'] {
+    padding: 0 5px;
+}
+.pos-remove-spacing div[class^='col-']:first-child {
+    padding: 0 5px 0 15px;
+}
+.pos-remove-spacing div[class^='col-']:last-child {
+    padding: 0 15px 0 5px;
+}
+
+.image_rounded {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+        @media print {
+        .col-md-3 {
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+.pur_inputs .form-control {
+    color: #67757c;
+    min-height: 30px;
+    padding: 9px 10px;
+    font-size: .8rem;
+    line-height: 1;
+    color: #495057;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid #fff;
+    border-radius: 0 !IMPORTANT;
+}
+.topbar .top-navbar .navbar-nav>.nav-item>.nav-link {
+    line-height: 25px;
+}
+.mailbox .message-center a {
+    padding: 5px 15px;
+}
+.mailbox .message-center a .mail-contnet h5 {
+    margin: 0px 0px 2px;
+}
+.ui-menu .ui-menu-item {
+    color:cornflowerblue;
+    background:white;
+    line-height:20px !important;
+    font-size:12px !important;
+}
+@media print{
+    p.company-info, p.customer-details span {
+        font-size: 13px;
+        font-weight: 600;
+        color: #000;
+    }
+    p.customer-details span{
+        margin-bottom:5px;
+    }
+    .receipt_body th {
+        font-size: 14px;
+        font-weight: 700;
+        color: #000;
+    }
+    .receipt_body tbody td {
+        font-size: 13px;
+        font-weight: 600;
+        color: #000;
+    }
+    #invoicedom > div > div.receipt_header > div > div:nth-child(1) > p > span:nth-child(3) {
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+        border-bottom: 1px dashed;
+    }
+}

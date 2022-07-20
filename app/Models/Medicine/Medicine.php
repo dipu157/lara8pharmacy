@@ -8,6 +8,7 @@ use App\Models\Common\Shelf;
 use App\Models\Medicine\Generic;
 use App\Models\Medicine\Medicine_Type;
 use App\Models\Medicine\Strength;
+use App\Models\Supplier\Supplier;
 
 class Medicine extends Model
 {
@@ -62,5 +63,10 @@ class Medicine extends Model
     public function strength()
     {
         return $this->belongsTo(Strength::class,'strength_id','id');
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class,'supplier_id','id');
     }
 }
