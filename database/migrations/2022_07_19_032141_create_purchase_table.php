@@ -24,7 +24,7 @@ class CreatePurchaseTable extends Migration
             $table->date('purchase_date');
             $table->string('details',100)->nullable();
             $table->decimal('total_amount',15,2)->default(0);
-            $table->decimal('vat',15,2)->default(0)->nullable();
+            $table->decimal('total_vat',15,2)->default(0)->nullable();
             $table->decimal('total_discount',15,2)->default(0)->nullable();
             $table->decimal('net_payable',15,2)->default(0);
             $table->integer('user_id')->unsigned();

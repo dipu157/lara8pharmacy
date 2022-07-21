@@ -7,7 +7,8 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action='' method='post' class='form-horizontal' enctype='multipart/form-data' accept-charset='utf-8' id='ReviewForm'>
+            <form action='' method='post' class='form-horizontal' accept-charset='utf-8' id='ReviewForm'>
+                @csrf
                 <div class="modal-body" id="reviewDom">
                 </div>
                 <div class="modal-footer">

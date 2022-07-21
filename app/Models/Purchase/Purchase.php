@@ -23,7 +23,7 @@ class Purchase extends Model
         'purchase_date',
         'details',
         'total_amount',
-        'vat',
+        'total_vat',
         'total_discount',
         'net_payable',
         'user_id',

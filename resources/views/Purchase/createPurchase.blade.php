@@ -146,7 +146,7 @@
                                                 <?php endforeach; ?>
                                             </select></td>
 
-                                            
+
                                         <td><input type="text" name="receiver_name" id="rname"
                                                 class="form-control" placeholder="Receiver Name" value=""></td>
                                         <td><input type="text" name="receiver_contact" id="rcontact"
@@ -247,6 +247,7 @@
                             total_discount = parseFloat(qty * discount).toFixed(2);
                         }
                     }
+                    var net_amount = 0;
                     if (isNaN(discount) == true) {
                         net_payable = net_amount;
                     } else {
@@ -262,9 +263,9 @@
                     }
 
                     // alert(net_payable);
-                    $(rows).find('[name="total_amount[]"]').val(total_amount);
-                    $(rows).find('[name="total_vat[]"]').val(total_vat);
-                    $(rows).find('[name="total_discount[]"]').val(total_discount);
+                    $(rows).find('[name="net_tp[]"]').val(total_amount);
+                    $(rows).find('[name="net_vat[]"]').val(total_vat);
+                    $(rows).find('[name="net_discount[]"]').val(total_discount);
                     $(rows).find('[name="net_amount[]"]').val(net_payable);
 
                     var sum = 0;
@@ -305,6 +306,8 @@
                     var totalVatv = parseInt($(".netVat").val(tvat));
                     var netDiscountv = parseInt($(".netDis").val(discoun));
 
+
+
                     var dueval = 0;
                     if (isNaN(paidval) == true) {
                         dueval = 0;
@@ -321,8 +324,8 @@
         });
     </script>
 
-    {{-- Click Review Button --}}
-    <script type="text/javascript">
+      <!-- Purchase Submit for Purchase Review Modal -->
+      <script type="text/javascript">
         $(document).ready(function() {
             $("#purchasesubmit").click(function(event) {
                 event.preventDefault();
@@ -355,4 +358,139 @@
             });
         });
     </script>
+
+    <!--Review form calculation-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on('keyup','.qtyval, .tardepriceval, .totalval , .vatval , .p_discountval, .paidval, .dueval',function() {
+
+            var rows = this.closest('#ReviewForm tr');
+            var quantity = $(rows).find(".qtyval");
+            var price = $(rows).find(".tardepriceval");
+            var vatp = $(rows).find(".vatval");
+            var rev_discount = $(rows).find(".p_discountval");
+
+            var qty = parseInt($(quantity).val());
+            var trade = parseFloat($(price).val());
+            var vat = parseFloat($(vatp).val());
+            var discount = parseFloat($(rev_discount).val());
+
+            var total_amount = 0;
+            var total_vat = 0;
+            var total_discount = 0;
+            var net_payable = 0;
+
+                if(isNaN(qty) == true){
+                    var total_amount = 0;
+                    var total_vat = 0;
+                    var total_discount = 0;
+                    var net_payable = 0;
+                } else {
+                    if(qty > 0){
+                        var rawPrice = trade + vat - discount;
+                            net_payable = qty * rawPrice;
+                            net_payable = parseFloat(net_payable).toFixed(2);
+                            var net_amount = net_payable;
+
+                            total_amount = parseFloat(qty * trade).toFixed(2);
+                            total_vat = parseFloat(qty * vat).toFixed(2);
+                            total_discount = parseFloat(qty * discount).toFixed(2);
+                    }
+                }
+                var netAmnt = 0;
+                if(isNaN(discount) == true){
+                    net_payable = netAmnt;
+                } else {
+                    if(qty > 0){
+                        var rawPrice = trade + vat - discount;
+                            net_payable = qty * rawPrice;
+                            net_payable = parseFloat(net_payable).toFixed(2);
+
+                            total_amount = parseFloat(qty * trade).toFixed(2);
+                            total_vat = parseFloat(qty * vat).toFixed(2);
+                            total_discount = parseFloat(qty * discount).toFixed(2);
+                    }
+                }
+
+                $(rows).find('[name="net_amount[]"]').val(net_payable);
+                $(rows).find('[name="net_tp[]"]').val(total_amount);
+                $(rows).find('[name="net_vat[]"]').val(total_vat);
+                $(rows).find('[name="net_discount[]"]').val(total_discount);
+
+                var sum = 0;
+                $(".totalval").each(function(index){
+                sum += parseFloat($(this).val());
+                });
+
+                var tAmnt = 0;
+                $(".tamountval").each(function(index){
+                    tAmnt += parseFloat($(this).val());
+                });
+
+                var tVat = 0;
+                $(".tvatval").each(function(index){
+                    tVat += parseFloat($(this).val());
+                });
+
+                var tDisc = 0;
+                $(".tdiscountval").each(function(index){
+                    tDisc += parseFloat($(this).val());
+                });
+
+                $(".gtotalval").val(Math.round(sum));
+                $(".netAmnt").val(Math.round(tAmnt));
+                $(".netVat").val(Math.round(tVat));
+                $(".netDiscount").val(Math.round(tDisc));
+
+                var rpaid = $(rows).find(".paidval");
+                var rpaidval = parseInt($(rpaid).val());
+                console.log(rpaid);
+
+            var rdueval = 0;
+                if(isNaN(rpaidval) == true){
+                    rdueval = 0;
+                } else {
+                    rdueval = sum - rpaidval;
+                }
+
+            $(".dueval").val(rdueval);
+            });
+        });
+        </script>
+
+        <!-- Submit For Save Purchase and Print  -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#FinalPrint").on('click',function (event) {
+            event.preventDefault();
+            var formval = $('#ReviewForm')[0];
+            var data = new FormData(formval);
+            $("#FinalPrint").text('Purchase Saving...');
+                $.ajax({
+                type: "POST",
+                url: '{{ route('purchaseFinalSave') }}',
+                dataType: 'html',
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function(response){
+                //console.log(response);
+                $("#invoicedom").html(response);
+                $('#ReviewForm').modal('hide');
+                $(this).hide();
+                $("#invoicemodal").modal("show");
+                alert('Save successFully');
+                },
+                error: function(response){
+                alert('Something went wrong! Error');
+                console.error();
+                }
+            });
+        });
+    });
+</script>
+
+
 @endpush

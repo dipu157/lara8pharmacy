@@ -25,9 +25,9 @@ class CreatePurchaseDetailsTable extends Migration
             $table->foreign('medicine_id')->references('id')->on('medicine')->onDelete('RESTRICT');
             $table->string('qty',20);
             $table->decimal('supplier_price',15,2)->default(0);
-            $table->decimal('vat',15,2)->default(0)->nullable();
-            $table->decimal('total_amount',15,2)->default(0);
-            $table->decimal('discount',15,2)->default(0)->nullable();
+            $table->decimal('net_vat',15,2)->default(0)->nullable();
+            $table->decimal('net_tp',15,2)->default(0);
+            $table->decimal('net_discount',15,2)->default(0)->nullable();
             $table->decimal('net_amount',15,2)->default(0);
             $table->date('expire_date');
             $table->integer('user_id')->unsigned();

@@ -23,7 +23,7 @@ class CreateSupplierPaymentTable extends Migration
             $table->foreign('supplier_id')->references('id')->on('supplier')->onDelete('RESTRICT');
             $table->integer('payment_type_id')->unsigned();
             $table->foreign('payment_type_id')->references('id')->on('payment_types')->onDelete('RESTRICT');
-            $table->integer('bank_id')->unsigned();
+            $table->integer('bank_id')->unsigned()->nullable();
             $table->foreign('bank_id')->references('id')->on('bank')->onDelete('RESTRICT');
             $table->string('check_no',100)->nullable();
             $table->date('issue_date')->nullable();
