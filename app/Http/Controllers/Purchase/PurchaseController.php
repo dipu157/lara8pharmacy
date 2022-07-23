@@ -355,7 +355,122 @@ class PurchaseController extends Controller
                     $PurchaseDetailsInsert = PurchaseDetails::create($PurchaseDetails);
                     }
                 }
+
+                foreach ($request->qty as $row => $name) {
+                    if (!empty($request->qty[$row])) {
+                        $medicineId   =   $request->id[$row];
+                        $qty        =   $request->qty[$row];
+                        $tradeprice =   $request->trade_price[$row];
+                        $mrp         =   $request->mrp[$row];
+                        $vat        =   $request->vat[$row];
+                        $discount   =   $request->p_discount[$row];
+
+                    $medicine = Medicine::query()->where('company_id',1)->where('id',$medicineId)->first();
+                    $instock = $medicine->in_stock + $qty;
+                    $boxSize = $medicine->box_size;
+
+                    $medicineData = [
+                            'in_stock'       =>  $instock,
+                            'mrp'           =>  $mrp,
+                            'trade_price'   =>  $tradeprice * $boxSize,
+                            'vat'           =>  $vat * $boxSize,
+                            'p_discount'    =>  $discount *$boxSize
+                    ];
+                    $Medicine = Medicine::find($medicine->id);
+                    $MedicineUpdate =  $Medicine->update($medicineData);
+                    }
+
+                    }
             }
+
+            echo "<div class='row'>
+                    <div class='col-md-12'>
+                        <div class='card card-body printableArea' id='printableArea'>
+                            <h5>INVOICE: <span class='pull-right text-muted'>#$request->invoice_no</span></h5>
+                            <hr>
+                            <div class='row'>
+                                <div class='col-md-12' style='margin-top: -32px;'>
+                                    <div class='pull-left'>
+                                        <address>
+                                            <h3> &nbsp;<b class='text-muted'>". get_company_name() ."</b></h3>
+                                        </address>
+                                    </div>
+                                    <div class='pull-right text-right'>
+                                        <address>
+                                            <h3 class='text-muted'>To,</h3>
+                                            <h5 class='text-muted'>$purchaseLast->name</h5>
+                                            <p class='text-muted m-l-10'>$purchaseLast->address,
+                                                <br> $purchaseLast->email,
+                                                <br> $purchaseLast->phone</p>
+                                            <p class='text-muted m-t-5'><b>Invoice Date :</b> <i class='fa fa-calendar'></i> $request->purchase_date</p>
+                                        </address>
+                                    </div>
+                                </div>
+                                <div class='col-md-12'>
+                                    <div class='table-responsive m-t-10' style='clear: both;'>
+                                        <table class='table table-hover'>
+                                            <thead>
+                                                <tr>
+                                                    <th class=''>Medicine</th>
+                                                    <th>Quantity</th>
+                                                    <th class=''>Trade Price</th>
+                                                    <th class=''>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>";
+                                            foreach ($request->qty as $row => $name) {
+                                                if (!empty($request->qty[$row])) {
+                                                    $medicineId   =   $request->id[$row];
+                                                    $qty        =   $request->qty[$row];
+                                                    $tradeprice =   $request->trade_price[$row];
+                                                    $vat        =   $request->vat[$row];
+                                                    $discount   =   $request->p_discount[$row];
+                                                    $total      =   $request->net_amount[$row];
+                                                    $expire     =   $request->expire_date[$row];
+
+                                                    $medicine = Medicine::query()->where('company_id',1)->where('id',$medicineId)->first();
+                                                    $instock = $medicine->in_stock + $qty;
+                                                echo "<tr>
+                                                    <td class=''>$medicine->name</td>
+                                                    <td>$qty</td>
+                                                    <td class=''>$tradeprice </td>
+                                                    <td class=''> $total </td>
+                                                </tr>";
+                                        }
+                                        }
+                                            echo "</tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class='col-md-12'>
+                                    <div class='pull-right m-t-5 text-right'>
+                                        <p style='margin-bottom: auto'>Sub - Total amount: $request->net_payable</p>
+                                        <p style='margin-bottom: auto'>Sub - Total Paid: $paids</p>
+                                        <p style='margin-bottom: auto'>Sub - Total Due: $due </p>
+                                        <hr>
+                                    </div>
+                                    <div class='clearfix'></div>
+                                    <hr>
+                                </div>
+                                <div class='col-md-12 m-t-10'>
+                                    <div class='clearfix'>
+                                    <div class='col-md-4'>
+                                    <div id='signaturename'>
+                                        Signature:
+                                    </div>
+
+                                    <div id='signature'>
+                                    </div>
+                                    </div>
+                                    <div class='col-md-8'>
+                                    </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>";
 
         }
 }
