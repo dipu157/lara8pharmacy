@@ -58,7 +58,7 @@ class PurchaseController extends Controller
                         <input type='hidden' class='form-control medicine' id='medicineId' name='id[]' readonly value=" . $value->id . ">
                         <input type='text' class='form-control' name='mname[]' readonly value='" . $value->medicine_type->short_name . " " . $value->name . " " . $value->strength->strength . "'>
                         </td>
-                        <td><input type='date' class='form-control datepicker' name='expire_date[]' value='' id='datepicker'></td>
+                        <td><input type='date' class='form-control datepicker' name='expire_date[]' value='" . $value->expire_date . "' id='datepicker'></td>
                         <td> <input type='text' class='form-control' name='in_stock[]' placeholder='0.00' readonly value='" . $value->in_stock . "'> </td>
                         <td><input type='text' class='form-control qty' name='qty[]' placeholder='0.00' value=''></td>
                         <td><input type='text' class='form-control tradeprice' name='trade_price[]' placeholder='0.00' value='" . sprintf("%.2f", $value->trade_price / $value->box_size) . "'></td>
@@ -234,109 +234,114 @@ class PurchaseController extends Controller
                             <tr id='payform'>";
 
 
-                            echo "<td><select class='select2 form-control' name='payment_type_id' style='width:100%' >";
-                            foreach ($payment_type as $value) {
-                                echo "<option value='$value->id'>$value->payment_method</option>";
-                            }
-                            echo "</select></td>
+            echo "<td><select class='select2 form-control' name='payment_type_id' style='width:100%' >";
+            foreach ($payment_type as $value) {
+                echo "<option value='$value->id'>$value->payment_method</option>";
+            }
+            echo "</select></td>
                             <td><input type='text' name='receiver_name' id='rname' class='form-control' placeholder='Receiver Name' value='$receiver_name'></td>
                                                 <td><input type='text' name='receiver_contact' id='rcontact' class='form-control' placeholder='Receiver Contact' value='$receiver_contact'></td>
                                                 <td><input type='date' name='issue_date' class='form-control datepicker' placeholder='Pay Date' value='$paydate'></td>
                                         </tr>
                         </tfoot>
                     </table>";
-            } else {
-                echo '<h2>Nothing To Display!!</h2>';
-            }
+        } else {
+            echo '<h2>Nothing To Display!!</h2>';
+        }
+    }
+
+    public function purchaseSave(Request $request)
+    {
+        // dd($request->all());
+
+        $data = [
+            'company_id' => $this->company_id,
+            'purchase_code' => 'P' . rand(1000, 2000),
+            'supplier_id' => $request->supplier_id,
+            'invoice_no' => $request->invoice_no,
+            'purchase_date' => $request->purchase_date,
+            'details' => $request->details,
+            'total_amount' => $request->total_amount,
+            'total_vat' => $request->total_vat,
+            'total_discount' => $request->total_discount,
+            'net_payable' => $request->net_payable,
+            'user_id' => $this->user_id,
+        ];
+
+        //dd($data['invoice_no']);
+
+        $invoiceid    = Purchase::query()->where('company_id', 1)->where('invoice_no', $data['invoice_no'])->pluck('invoice_no');
+        if ($data['invoice_no'] == $invoiceid) {
+            echo "This Invoice is Already exist";
+            die();
         }
 
-        public function purchaseSave(Request $request)
-        {
-           // dd($request->all());
+        $supplier_balance = SupplierLedger::query()
+            ->where('company_id', 1)
+            ->where('supplier_id', $data['supplier_id'])
+            ->first();
 
-            $data = [
+        $supplier_info = Supplier::query()
+            ->where('company_id', 1)
+            ->where('id', $data['supplier_id'])
+            ->first();
+        // dd($supplier_balance);
+
+        $total = $supplier_balance->total_amount + $data['net_payable'];
+        $due = $supplier_balance->due + $request->due;
+        $paids = $supplier_balance->paid + $request->paid;
+
+        $supplier_balanceData = array();
+        $supplier_balanceData = array(
+            'total_amount' => $total,
+            'paid' => $paids,
+            'due' => $due
+        );
+        $supplierBalance = SupplierLedger::find($supplier_balance->id);
+        $supplierBalanceUpdate =  $supplierBalance->update($supplier_balanceData);
+
+        if ($supplierBalanceUpdate) {
+            $purchaseInsert = Purchase::create($data);
+
+            $purchaseLast = Purchase::query()
+                ->where('company_id', 1)
+                ->latest('id')
+                ->first();
+
+            $supplierPaymentData = [
                 'company_id' => $this->company_id,
-                'purchase_code' => 'P'.rand(1000,2000),
-                'supplier_id' => $request->supplier_id,
-                'invoice_no' => $request->invoice_no,
-                'purchase_date' => $request->purchase_date,
-                'details' => $request->details,
-                'total_amount' => $request->total_amount,
-                'total_vat' => $request->total_vat,
-                'total_discount' => $request->total_discount,
-                'net_payable' => $request->net_payable,
+                'purchase_id' => $purchaseLast->id,
+                'supplier_id' => $purchaseLast->supplier_id,
+                'payment_type_id' => $request->payment_type_id,
+                'receiver_name' => $request->receiver_name,
+                'receiver_contact' => $request->receiver_contact,
+                'paid_amount' => $request->paid,
                 'user_id' => $this->user_id,
             ];
 
-            //dd($data['invoice_no']);
+            $SupplierPaymentInsert = SupplierPayment::create($supplierPaymentData);
 
-            $invoiceid    = Purchase::query()->where('company_id', 1)->where('invoice_no', $data['invoice_no'])->pluck('invoice_no');
-            if ($data['invoice_no'] == $invoiceid) {
-            echo "This Invoice is Already exist";
-            die();
-            }
+            $supplierAccountData = [
+                'company_id' => $this->company_id,
+                'purchase_id' => $purchaseLast->id,
+                'supplier_id' => $purchaseLast->supplier_id,
+                'total_amount' => $request->net_payable,
+                'paid_amount' => $request->paid,
+                'due' => $request->due,
+                'user_id' => $this->user_id,
+            ];
 
-            $supplier_balance = SupplierLedger::query()
-                                ->where('company_id', 1)
-                                ->where('supplier_id',$data['supplier_id'])
-                                ->first();
-           // dd($supplier_balance);
+            $SupplierAccountInsert = SupplierAccount::create($supplierAccountData);
 
-            $total = $supplier_balance->total_amount + $data['net_payable'];
-            $due = $supplier_balance->due + $request->due;
-            $paids = $supplier_balance->paid + $request->paid;
-
-                $supplier_balanceData = array();
-                $supplier_balanceData = array(
-                   'total_amount' => $total,
-                   'paid' => $paids,
-                   'due' => $due
-                );
-            $supplierBalance = SupplierLedger::find($supplier_balance->id);
-            $supplierBalanceUpdate =  $supplierBalance->update($supplier_balanceData);
-
-            if($supplierBalanceUpdate){
-                $purchaseInsert = Purchase::create($data);
-
-                $purchaseLast = Purchase::query()
-                                ->where('company_id', 1)
-                                ->latest('id')
-                                ->first();
-
-                $supplierPaymentData = [
-                    'company_id' => $this->company_id,
-                    'purchase_id' => $purchaseLast->id,
-                    'supplier_id' => $purchaseLast->supplier_id,
-                    'payment_type_id' => $request->payment_type_id,
-                    'receiver_name' => $request->receiver_name,
-                    'receiver_contact' => $request->receiver_contact,
-                    'paid_amount' => $request->paid,
-                    'user_id' => $this->user_id,
-                ];
-
-                $SupplierPaymentInsert = SupplierPayment::create($supplierPaymentData);
-
-                $supplierAccountData = [
-                    'company_id' => $this->company_id,
-                    'purchase_id' => $purchaseLast->id,
-                    'supplier_id' => $purchaseLast->supplier_id,
-                    'total_amount' => $request->net_payable,
-                    'paid_amount' => $request->paid,
-                    'due' => $request->due,
-                    'user_id' => $this->user_id,
-                ];
-
-                $SupplierAccountInsert = SupplierAccount::create($supplierAccountData);
-
-                foreach ($request->qty as $row => $name) {
-                    if (!empty($request->qty[$row])) {
-                        $medicineId   =   $request->id[$row];
-                        $qty        =   $request->qty[$row];
-                        $tradeprice =   $request->trade_price[$row];
-                        $vat        =   $request->vat[$row];
-                        $discount   =   $request->p_discount[$row];
-                        $total      =   $request->net_amount[$row];
-                        $expire     =   $request->expire_date[$row];
+            foreach ($request->qty as $row => $name) {
+                if (!empty($request->qty[$row])) {
+                    $medicineId   =   $request->id[$row];
+                    $qty        =   $request->qty[$row];
+                    $tradeprice =   $request->trade_price[$row];
+                    $vat        =   $request->vat[$row];
+                    $discount   =   $request->p_discount[$row];
+                    $total      =   $request->net_amount[$row];
+                    $expire     =   $request->expire_date[$row];
 
                     $PurchaseDetails = [
                         'company_id' => $this->company_id,
@@ -344,7 +349,7 @@ class PurchaseController extends Controller
                         'medicine_id'      =>  $medicineId,
                         'supplier_id' => $purchaseLast->supplier_id,
                         'qty'      =>  $qty,
-                        'supplier_price'=>$tradeprice + $vat - $discount,
+                        'supplier_price' => $tradeprice + $vat - $discount,
                         'net_vat'   =>  $vat,
                         'net_discount'   =>  $discount,
                         'net_tp'   =>  $tradeprice,
@@ -353,124 +358,173 @@ class PurchaseController extends Controller
                         'user_id' => $this->user_id,
                     ];
                     $PurchaseDetailsInsert = PurchaseDetails::create($PurchaseDetails);
-                    }
                 }
+            }
 
-                foreach ($request->qty as $row => $name) {
-                    if (!empty($request->qty[$row])) {
-                        $medicineId   =   $request->id[$row];
-                        $qty        =   $request->qty[$row];
-                        $tradeprice =   $request->trade_price[$row];
-                        $mrp         =   $request->mrp[$row];
-                        $vat        =   $request->vat[$row];
-                        $discount   =   $request->p_discount[$row];
+            foreach ($request->qty as $row => $name) {
+                if (!empty($request->qty[$row])) {
+                    $medicineId   =   $request->id[$row];
+                    $qty        =   $request->qty[$row];
+                    $tradeprice =   $request->trade_price[$row];
+                    $mrp         =   $request->mrp[$row];
+                    $vat        =   $request->vat[$row];
+                    $discount   =   $request->p_discount[$row];
+                    $expire     =   $request->expire_date[$row];
 
-                    $medicine = Medicine::query()->where('company_id',1)->where('id',$medicineId)->first();
+                    $medicine = Medicine::query()->where('company_id', 1)->where('id', $medicineId)->first();
                     $instock = $medicine->in_stock + $qty;
                     $boxSize = $medicine->box_size;
 
                     $medicineData = [
-                            'in_stock'       =>  $instock,
-                            'mrp'           =>  $mrp,
-                            'trade_price'   =>  $tradeprice * $boxSize,
-                            'vat'           =>  $vat * $boxSize,
-                            'p_discount'    =>  $discount *$boxSize
+                        'in_stock'       =>  $instock,
+                        'expire_date'   => $expire,
+                        'mrp'           =>  $mrp,
+                        'trade_price'   =>  $tradeprice * $boxSize,
+                        'vat'           =>  $vat * $boxSize,
+                        'p_discount'    =>  $discount * $boxSize
                     ];
                     $Medicine = Medicine::find($medicine->id);
                     $MedicineUpdate =  $Medicine->update($medicineData);
-                    }
-
-                    }
+                }
             }
-
-            echo "<div class='row'>
-                    <div class='col-md-12'>
-                        <div class='card card-body printableArea' id='printableArea'>
-                            <h5>INVOICE: <span class='pull-right text-muted'>#$request->invoice_no</span></h5>
-                            <hr>
-                            <div class='row'>
-                                <div class='col-md-12' style='margin-top: -32px;'>
-                                    <div class='pull-left'>
-                                        <address>
-                                            <h3> &nbsp;<b class='text-muted'>". get_company_name() ."</b></h3>
-                                        </address>
-                                    </div>
-                                    <div class='pull-right text-right'>
-                                        <address>
-                                            <h3 class='text-muted'>To,</h3>
-                                            <h5 class='text-muted'>$purchaseLast->name</h5>
-                                            <p class='text-muted m-l-10'>$purchaseLast->address,
-                                                <br> $purchaseLast->email,
-                                                <br> $purchaseLast->phone</p>
-                                            <p class='text-muted m-t-5'><b>Invoice Date :</b> <i class='fa fa-calendar'></i> $request->purchase_date</p>
-                                        </address>
-                                    </div>
-                                </div>
-                                <div class='col-md-12'>
-                                    <div class='table-responsive m-t-10' style='clear: both;'>
-                                        <table class='table table-hover'>
-                                            <thead>
-                                                <tr>
-                                                    <th class=''>Medicine</th>
-                                                    <th>Quantity</th>
-                                                    <th class=''>Trade Price</th>
-                                                    <th class=''>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>";
-                                            foreach ($request->qty as $row => $name) {
-                                                if (!empty($request->qty[$row])) {
-                                                    $medicineId   =   $request->id[$row];
-                                                    $qty        =   $request->qty[$row];
-                                                    $tradeprice =   $request->trade_price[$row];
-                                                    $vat        =   $request->vat[$row];
-                                                    $discount   =   $request->p_discount[$row];
-                                                    $total      =   $request->net_amount[$row];
-                                                    $expire     =   $request->expire_date[$row];
-
-                                                    $medicine = Medicine::query()->where('company_id',1)->where('id',$medicineId)->first();
-                                                    $instock = $medicine->in_stock + $qty;
-                                                echo "<tr>
-                                                    <td class=''>$medicine->name</td>
-                                                    <td>$qty</td>
-                                                    <td class=''>$tradeprice </td>
-                                                    <td class=''> $total </td>
-                                                </tr>";
-                                        }
-                                        }
-                                            echo "</tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class='col-md-12'>
-                                    <div class='pull-right m-t-5 text-right'>
-                                        <p style='margin-bottom: auto'>Sub - Total amount: $request->net_payable</p>
-                                        <p style='margin-bottom: auto'>Sub - Total Paid: $paids</p>
-                                        <p style='margin-bottom: auto'>Sub - Total Due: $due </p>
-                                        <hr>
-                                    </div>
-                                    <div class='clearfix'></div>
-                                    <hr>
-                                </div>
-                                <div class='col-md-12 m-t-10'>
-                                    <div class='clearfix'>
-                                    <div class='col-md-4'>
-                                    <div id='signaturename'>
-                                        Signature:
-                                    </div>
-
-                                    <div id='signature'>
-                                    </div>
-                                    </div>
-                                    <div class='col-md-8'>
-                                    </div>
-                                    </div>
-                                    <hr>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>";
-
         }
+    }
+
+    public function purchaseHistoryIndex()
+    {
+
+        return view('Purchase.purchaseHistory');
+    }
+
+    public function getallPurchase()
+    {
+        // echo $current = Carbon::now()->format('Y-m-d');
+
+        $purchase = Purchase::all();
+        $output = '';
+        if ($purchase->count() > 0) {
+            $output .= '<table id="getAllPurchase" class="table table-striped table-sm text-center align-middle">
+            <thead>
+                <tr>
+                    <th>SL</th>
+                    <th>Supplier Name</th>
+                    <th>Invoice No</th>
+                    <th>Purchase Date</th>
+                    <th>Total</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody>';
+            foreach ($purchase as $row) {
+                $output .= '<tr>
+                <td>' . $row->id . '</td>
+                <td>' . $row->supplier->name . '</td>
+                <td><a href="' . route('invoiceDetails', ['id' => $row->id]) . '">' . $row->invoice_no . '</a></td>
+                <td>' . $row->purchase_date . '</td>
+                <td>' . $row->net_payable . '</td>
+                <td>
+                  <a href="#" id="' . $row->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#"><i class="fa fa-print"></i></a>
+                </td>
+              </tr>';
+            }
+            $output .= '</tbody></table>';
+            echo $output;
+        } else {
+            echo '<h1 class="text-center text-secondary my-5">No Record Found in Database</h1>';
+        }
+    }
+
+    public function invoiceDetails(Request $request)
+    {
+
+        $id = $request->id;
+
+        $purchaseDetails = PurchaseDetails::query()->where('company_id', 1)->where('purchase_id', $id)->get();
+
+        return view('Purchase.medicineByPurchaseId', compact('purchaseDetails'));
+    }
+
+    public function purchaseReturn()
+    {
+        return view('Return.Purchase.purchaseReturn');
+    }
+
+    public function invoiceSearch(Request $request)
+    {
+        $purchase = Purchase::query()
+            ->where('company_id', 1)
+            ->where('invoice_no', $request->invoice_no)
+            ->first();
+
+        $purchaseDetails = PurchaseDetails::query()->where('company_id', 1)->where('purchase_id', $purchase->id)->get();
+
+        // dd($purchaseDetails);
+
+        echo "<form action='Return_Confirm' method='post' class='form-horizontal' enctype='multipart/form-data' id='purchaserForm' >
+
+                                        <div class='row'>
+                                            <div class='col-md-3'>
+                                                <div class='form-group'>
+                                                <label class='control-label'>Supplier Name</label>
+                                                <input type='text' name='supplier' class='form-control' placeholder='' value='" . $purchaseDetails[0]->supplier->name . "' autocomplete='off' readonly>
+                                                <input type='hidden' name='sid' class='form-control' placeholder='' value='" . $purchaseDetails[0]->supplier->id . "' autocomplete='off'>
+                                                <input type='hidden' name='purid' class='form-control' placeholder='' value='" . $purchaseDetails[0]->purchase_id . "' autocomplete='off'>
+                                                </div>
+                                            </div>
+                                            <div class='col-md-2'>
+                                                <div class='form-group'>
+                                                    <label class='control-label'>Invoice No</label>
+                                                    <input type='number' id='firstName' name='invoice' class='form-control' placeholder='Invoice No' value='" . $purchaseDetails[0]->purchase->invoice_no . "' autocomplete='off' readonly>
+                                                </div>
+                                            </div>
+                                            <div class='col-md-2'>
+                                                <div class='form-group'>
+                                                    <label class='control-label'>Invoice Date</label>
+                                                    <input type='text' id='datepicker' class='form-control datepicker' placeholder='' name='entrydate' autocomplete='off' value='" . $purchaseDetails[0]->purchase->purchase_date . "' readonly>
+                                                </div>
+                                            </div>
+                                            <div class='col-md-5'>
+                                                <div class='form-group'>
+                                                    <label class='control-label'>Note</label>
+                                                    <textarea type='text' name='details' class='form-control' placeholder='Details' rows='1' cols='8' readonly>" . $purchaseDetails[0]->purchase->details . "</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <tfood>
+                                            </tfood><table class='table table-bordered m-t-5 purchase'>
+
+                                        <thead>
+                                            <tr>
+                                                <th>Medicine  </th>
+                                                <th>Purchase Qty</th>
+                                                <th>Return Qty</th>
+                                                <th>Supplier Price</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id='addPurchaseItem'>";
+        foreach ($purchaseDetails as $value) :
+            echo "<tr>
+                            <td><input type='text' name='medicine' class='form-control' placeholder='Medicine' value='" . $value->medicine->name . "' autocomplete='off' readonly>
+                            <input type='hidden' name='mid[]' class='form-control' placeholder='Medicine' value='" . $value->medicine->id . "' autocomplete='off'>
+                            </td>
+                            <td><input type='number' class='form-control pqty' name='pqty[]' placeholder='' readonly value='$value->qty'></td>
+                            <td><input type='number' class='form-control rqty' name='rqty[]' placeholder='0.00' min='0' max='$value->qty' value='' ></td>
+                            <td><input type='text' class='form-control td' name='td[]' placeholder='' value='$value->supplier_price' readonly></td>
+                            <td><input type='text' class='form-control total' name='total[]' placeholder='' value='0'></td>
+                    </tr>";
+        endforeach;
+        echo "</tbody>
+                                        <tbody><tr>
+                                                <td class='text-right'> <input type='submit' id='purchasesubmit' class='btn btn-primary btn-block' value='Return'> </td>
+                                                <td class='text-right font-weight-bold' colspan=3>Grand Total:</td>
+
+                                                <td><input type='text' class='form-control gtotal' name='grandamount' placeholder='' readonly value=''></td>
+                                            </tr>
+
+                                    </tbody>
+
+                                    </table>
+                                    </form>";
+    }
 }

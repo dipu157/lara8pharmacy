@@ -30,6 +30,7 @@ class CreateMedicineTable extends Migration
             $table->foreign('strength_id')->references('id')->on('strength')->onDelete('RESTRICT');
             $table->integer('medicine_type_id')->unsigned();
             $table->foreign('medicine_type_id')->references('id')->on('medicine_types')->onDelete('RESTRICT');
+            $table->date('expire_date')->nullable();
             $table->string('box_size',30);
             $table->decimal('box_price',15,2)->default(0);
             $table->decimal('mrp',15,2)->default(0);

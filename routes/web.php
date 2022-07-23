@@ -184,9 +184,19 @@ Route::group(['middleware' => ['auth']], function () {
 
 // Purchase Route
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/managePurchase', [PurchaseController::class, 'index'])->name('createPurchase');
+    Route::get('/createPurchase', [PurchaseController::class, 'index'])->name('createPurchase');
     Route::post('/purchaseReview', [PurchaseController::class, 'purchaseReview'])->name('purchaseReview');
     Route::get('/GetMedicineBySupplierid', [PurchaseController::class, 'medicinebysupplierId'])->name('medicineBySupplier');
     Route::post('/purchaseFinalSave', [PurchaseController::class, 'purchaseSave'])->name('purchaseFinalSave');
+
+
+
+    Route::get('/purchaseHistory', [PurchaseController::class, 'purchaseHistoryIndex'])->name('purchaseHistory');
+    Route::get('/allPurchase', [PurchaseController::class, 'getallPurchase'])->name('allPurchase');
+    Route::get('/invoiceDetailsByinvoice', [PurchaseController::class, 'invoiceDetails'])->name('invoiceDetails');
+
+
+    Route::get('/returnPurchase', [PurchaseController::class, 'purchaseReturn'])->name('purchaseReturn');
+    Route::post('/searchInvoice', [PurchaseController::class, 'invoiceSearch'])->name('searchInvoice');
 });
 

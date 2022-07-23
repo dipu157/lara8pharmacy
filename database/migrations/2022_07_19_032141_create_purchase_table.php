@@ -20,7 +20,7 @@ class CreatePurchaseTable extends Migration
             $table->string('purchase_code',20)->unique()->nullable();
             $table->integer('supplier_id')->unsigned()->nullable();
             $table->foreign('supplier_id')->references('id')->on('supplier')->onDelete('RESTRICT');
-            $table->string('invoice_no',20);
+            $table->string('invoice_no',20)->unique();
             $table->date('purchase_date');
             $table->string('details',100)->nullable();
             $table->decimal('total_amount',15,2)->default(0);

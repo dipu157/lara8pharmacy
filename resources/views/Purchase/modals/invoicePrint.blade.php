@@ -3,7 +3,8 @@
     <div class="modal-dialog modal-lg" style="75%" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <img src="" height="80" width="110" style="margin:auto" alt="homepage" class="dark-logo" />
+                <h5>INVOICE: <span class='pull-right text-muted'>#</span></h5>
+                            <hr>
                 <button type="button" class="" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>

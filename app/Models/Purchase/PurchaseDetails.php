@@ -4,6 +4,8 @@ namespace App\Models\Purchase;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Medicine\Medicine;
+use App\Models\Supplier\Supplier;
 
 class PurchaseDetails extends Model
 {
@@ -27,4 +29,19 @@ class PurchaseDetails extends Model
         'expire_date',
         'user_id',
     ];
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class,'supplier_id','id');
+    }
+
+    public function medicine()
+    {
+        return $this->belongsTo(Medicine::class,'medicine_id','id');
+    }
+
+    public function purchase()
+    {
+        return $this->belongsTo(Purchase::class,'purchase_id','id');
+    }
 }

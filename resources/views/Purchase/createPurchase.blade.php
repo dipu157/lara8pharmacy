@@ -477,14 +477,13 @@
                 timeout: 600000,
                 success: function(response){
                 //console.log(response);
+                toastr.success('Purchase Save Successfully');
                 $("#invoicedom").html(response);
-                $('#ReviewForm').modal('hide');
-                $(this).hide();
-                $("#invoicemodal").modal("show");
-                alert('Save successFully');
+                $('#reviewmodal').modal('hide');
+                location.reload(true);
                 },
                 error: function(response){
-                alert('Something went wrong! Error');
+                toastr.error('Purchase Save Failed !! Try Again');
                 console.error();
                 }
             });

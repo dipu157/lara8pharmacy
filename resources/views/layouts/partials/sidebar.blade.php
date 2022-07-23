@@ -112,6 +112,12 @@
                   <p>Create Purchase</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('purchaseHistory') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Purchase History</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
@@ -193,9 +199,9 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/tables/simple.html" class="nav-link">
+                <a href="{{ route('purchaseReturn') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Simple Tables</p>
+                  <p>Purchase Return</p>
                 </a>
               </li>
             </ul>

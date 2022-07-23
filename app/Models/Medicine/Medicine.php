@@ -28,6 +28,7 @@ class Medicine extends Model
         'generic_id',
         'strength_id',
         'medicine_type_id',
+        'expire_date',
         'box_size',
         'box_price',
         'mrp',
