@@ -17,7 +17,7 @@ class CreatePurchaseReturnTable extends Migration
             $table->increments('id');
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('RESTRICT');
-            $table->string('return_code',20)->unique()->nullable();
+            $table->string('return_code',20)->nullable();
             $table->integer('purchase_id')->unsigned();
             $table->foreign('purchase_id')->references('id')->on('purchase')->onDelete('RESTRICT');
             $table->integer('supplier_id')->unsigned()->nullable();

@@ -35,8 +35,13 @@
                   </form>
               </div>
               <!-- /.card-header -->
-              <div class="card-body" id="show_invoice_details">
+              <div class="card-body">
+                <form method='post' class='form-horizontal' id="purchaseReturnForm">
+                    @csrf
+                    <div id="show_invoice_details">
 
+                    </div>
+                </form>
               </div>
               <!-- /.card-body -->
             </div>
@@ -96,7 +101,7 @@
     $(document).on('keyup','.rqty, .total',function() {
       //var total;
       var gtotal = 0;
-      var rows = this.closest('#purchaserForm tr');
+      var rows = this.closest('#show_invoice_details tr');
       var quantity = $(rows).find(".pqty");
       var reqty = $(rows).find(".rqty");
       var price = $(rows).find(".td");
@@ -120,4 +125,35 @@
     });
   });
     </script>
+
+ <!-- Submit For Return Purchase  -->
+    <script>
+        $(document).on('click', '.PurchaseReturnSubmit', function(e){
+		e.preventDefault();
+		var formval = $('#purchaseReturnForm')[0];
+        var data = new FormData(formval);
+        console.log(data);
+                $.ajax({
+                type: "POST",
+                url: '{{ route('savePurchaseReturn') }}',
+                dataType: 'html',
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function(response){
+                //console.log(response);
+                toastr.success('Purchase Return Successfully');
+                location.reload(true);
+                },
+                error: function(response){
+                toastr.error('Purchase Return Failed !! Try Again');
+                console.error();
+                }
+            });
+		});
+    </script>
+
+
 @endpush

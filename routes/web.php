@@ -190,13 +190,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/purchaseFinalSave', [PurchaseController::class, 'purchaseSave'])->name('purchaseFinalSave');
 
 
-
+    // Purchase Details Route
     Route::get('/purchaseHistory', [PurchaseController::class, 'purchaseHistoryIndex'])->name('purchaseHistory');
     Route::get('/allPurchase', [PurchaseController::class, 'getallPurchase'])->name('allPurchase');
     Route::get('/invoiceDetailsByinvoice', [PurchaseController::class, 'invoiceDetails'])->name('invoiceDetails');
 
-
+    // Purchase Return Route
     Route::get('/returnPurchase', [PurchaseController::class, 'purchaseReturn'])->name('purchaseReturn');
     Route::post('/searchInvoice', [PurchaseController::class, 'invoiceSearch'])->name('searchInvoice');
+    Route::post('/purchaseReturn', [PurchaseController::class, 'purchaseReturnSave'])->name('savePurchaseReturn');
 });
 
