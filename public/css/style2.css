@@ -1,0 +1,42 @@
+
+.b-r-0{border-right:0px!important;}
+.p-l-r-5{padding-left:5px!important;padding-right:5px!important;}
+.p-l-5{padding-left:5px!important;}
+.p-r-5{padding-right:5px!important;}
+.custom-text-button{font-size:13px;font-weight:600;padding:5px 0px;}
+.m-b-5{margin-bottom:10px!important;}
+.custom-text-button {font-size: 13px;font-weight: 600;padding: 5px 2px;}
+#SalesForm :focus {outline: 1px solid rgba(0, 0, 0, 0.3)}
+.select2-container--open .select2-dropdown {left: -37px;width: 250px !important;}
+.select2-container .select2-selection--single{height:37px;}
+.select2-container {width: 100%!important;}
+.select2-container--default .select2-selection--single .select2-selection__rendered{display:none;}
+.select2-container--default .select2-selection--single .select2-selection__arrow{width:100%;}
+.table th, .table thead th{padding-left:10px;}
+span.previous-dues {font-size: 12px;font-weight: 500;color: #eb0a8d;}
+h4.previous-due-header {font-size: 14px; font-weight: 600;color: #eb0a8d;margin-top: 10px;}
+/*Controll Customer section line number 380*/
+.discount-info{color:#000;font-size:14px;margin:0px;}
+.ui-menu .ui-menu-item-wrapper {font-size: 13px;font-weight: 600;}
+.ui-menu .ui-menu-item-wrapper:hover {font-size: 13px;font-weight: 700;}
+.form-group.genric-left-sug {
+    width: 85%;
+    float: left;
+}
+.input-group.genric-right-sug {
+    width: 15%;
+    float:  right;
+}
+    .custom-text-button {font-size: 16px; font-weight: 600; padding: 5px 2px; }
+    li.super-sale-list{    padding: 0px!important;padding-left: 5px!important;border-bottom: .5px solid #e3e3e3!important;padding-top: 0!important;margin-top: 1px;font-size: 13px;font-weight: 600;}
+@media (max-width: 1400px){
+    span.input-group-addon.suggestion-icon.b-r-0 {display: none;}
+    .select2-container {width: 100%!important;}
+    .select2-container--default .select2-selection--single .select2-selection__arrow{width:100%!important;}
+    .select2-container--open .select2-dropdown {left: 0px;width: 250px !important;}
+    label.col-form-label.pos-label {font-size: 13px;}
+    .custom-text-button {font-size: 13px; font-weight: 600; padding: 5px 2px; }
+
+}
+@media (max-width: 780px){}
+

@@ -17,6 +17,7 @@ use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\Customer_ledgerController;
 use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\Purchase\PurchaseController;
+use App\Http\Controllers\Sales\SalesController;
 use Illuminate\Routing\RouteGroup;
 
 /*
@@ -199,5 +200,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/returnPurchase', [PurchaseController::class, 'purchaseReturn'])->name('purchaseReturn');
     Route::post('/searchInvoice', [PurchaseController::class, 'invoiceSearch'])->name('searchInvoice');
     Route::post('/purchaseReturn', [PurchaseController::class, 'purchaseReturnSave'])->name('savePurchaseReturn');
+});
+
+// Sales Route
+Route::group(['middleware' => ['auth']], function () {
+
+	Route::get('/createSales', [SalesController::class, 'index'])->name('createSales');
+	Route::post('/GetCustomerId', [SalesController::class, 'GetCustomerId'])->name('GetCustomerId');
+	Route::get('/customerBalance', [SalesController::class, 'customerBalancebyID'])->name('customerBalance');
 });
 

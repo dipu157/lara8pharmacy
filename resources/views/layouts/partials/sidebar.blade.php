@@ -5,8 +5,9 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="" class="nav-link active">
-             <p>POS</p>
+            <a href="{{ route('createSales') }}" class="nav-link active">
+                <i class="nav-icon fas fa-edit"></i>
+             <p> POS</p>
             </a>
 
           </li>
@@ -99,9 +100,9 @@
           </li>
           <li class="nav-item">
             <a href="" class="nav-link">
-              <i class="fa fa-shopping-cart"></i>
+              <i class="nav-icon fa fa-shopping-cart"></i>
               <p>
-                Purchase
+                 Purchase
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -116,6 +117,29 @@
                 <a href="{{ route('purchaseHistory') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Purchase History</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                 Sales
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('createPurchase') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create Sales</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('purchaseHistory') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Sales History</p>
                 </a>
               </li>
             </ul>
