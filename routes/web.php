@@ -206,7 +206,11 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth']], function () {
 
 	Route::get('/createSales', [SalesController::class, 'index'])->name('createSales');
-	Route::post('/GetCustomerId', [SalesController::class, 'GetCustomerId'])->name('GetCustomerId');
-	Route::get('/customerBalance', [SalesController::class, 'customerBalancebyID'])->name('customerBalance');
+	Route::post('/GetCustomerInfobyId', [SalesController::class, 'customerById'])->name('GetCustomerId');
+	Route::get('/GetcustomerBalance', [SalesController::class, 'customerBalancebyID'])->name('customerBalance');
+
+
+    Route::get('/GetsuperProductPOS', [SalesController::class, 'superMedicinepos'])->name('superProductPOS');
+    Route::post('/addMedicinetorow', [SalesController::class, 'medicineTorow'])->name('addMedicinetorow');
 });
 
