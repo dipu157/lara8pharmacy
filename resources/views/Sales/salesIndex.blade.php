@@ -178,6 +178,7 @@
 
                                 <form action="" method="post" name="SalesFormConfirm"
                                     class="SalesFormConfirm" id="SalesFormConfirm">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-md-9">
                                             <div class="table-responsive mb-15"
@@ -405,7 +406,7 @@
                                 data: {
                                 id: id,
                                 _token: '{{ csrf_token() }}'
-                            },
+                                },
                             }).done(function(response) {
                                 //console.log(response);
                                 $('#sales').show();
@@ -444,7 +445,7 @@
             var iid = $(this).attr('data-id');
             console.log(iid);
                     $.ajax({
-                        url: '{{ route('superProductPOS') }}',
+                        url: '{{ route('getSpecificMedicine') }}',
                         method: 'GET',
                         data: {
                                 id: iid,
@@ -468,37 +469,6 @@
           });
         });
       </script>
-
-       <!--Generic wise Medicine-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-          $(document).on('change', '.generic', function (e) {
-            e.preventDefault(e);
-            //select to data return an array
-            var iid = $(this).val();
-            console.log(iid);
-                    $.ajax({
-                        url: '{{ route('superProductPOS') }}',
-                        method: 'GET',
-                        data: {
-                                id: iid,
-                                _token: '{{ csrf_token() }}'
-                            },
-                        dataType: 'json',
-                    }).done(function (response) {
-                        console.log(response);
-                        // Populate the form fields with the data returned from server
-                        $('#SalesForm').find('[name="mrp"]').val(response.mvalue.mrp).end();
-                        $('#SalesForm').find('[name="stock"]').val(response.mvalue.in_stock).end();
-                        $('#SalesForm').find('[name="exp"]').val(response.mvalue.expire_date).end();
-                        $('#SalesForm').find('[name="proname"]').val(response.mvalue.product_name+'('+response.mvalue.strength+')').end();
-                        $('#SalesForm').find('[name="genname"]').val(response.mvalue.generic.name).end();
-                        $('#SalesForm').find('[name="qty"]').attr("max",response.mvalue.in_stock).end();
-                    });
-                });
-            });
-         </script>
-
 
     <!--Product add to card-->
    <script>
@@ -633,9 +603,12 @@
             var pid = ui.item.value;
             //console.log(pid);
             $.ajax({
-              url: '<?php echo base_url() ?>Invoice/GetSimilarGenericdata?id=' +pid,
+              url: '{{ route('similarGenericMed') }}',
               method: 'GET',
-              data: 'data',
+              data: {
+                id: pid,
+                _token: '{{ csrf_token() }}'
+                },
             }).done(function (response) {
               //console.log(response);
               $('.generic').html(response);
@@ -670,6 +643,129 @@
   </script>
 
 
+       <!--Generic wise Medicine-->
+       <script type="text/javascript">
+        $(document).ready(function () {
+          $(document).on('change', '.generic', function (e) {
+            e.preventDefault(e);
+            //select to data return an array
+            var iid = $(this).val();
+            console.log(iid);
+                    $.ajax({
+                        url: '{{ route('getSpecificMedicine') }}',
+                        method: 'GET',
+                        data: {
+                                id: iid,
+                                _token: '{{ csrf_token() }}'
+                            },
+                        dataType: 'json',
+                    }).done(function (response) {
+                        console.log(response);
+                        // Populate the form fields with the data returned from server
+                        $('#SalesForm').find('[name="mrp"]').val(response.mvalue.mrp).end();
+                        $('#SalesForm').find('[name="stock"]').val(response.mvalue.in_stock).end();
+                        $('#SalesForm').find('[name="exp"]').val(response.mvalue.expire_date).end();
+                        $('#SalesForm').find('[name="proname"]').val(response.mvalue.name+'('+response.mvalue.strength.strength+')').end();
+                        $('#SalesForm').find('[name="genname"]').val(response.mvalue.generic.name).end();
+                        $('#SalesForm').find('[name="qty"]').attr("max",response.mvalue.in_stock).end();
+                    });
+                });
+            });
+         </script>
+
+
+   <!--Input value calculation-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+        $(document).on('keyup','.gdiscount, .total_discount, .grandtotal, .pay, .return, .payable',function() {
+          var discountamount = 0;
+          //var total;
+          var gtotal = 0;
+          var rows = this.closest('#SalesFormConfirm div');
+          var discount = $(rows).find(".gdiscount");
+          var total = $(rows).find(".grandtotal");
+          var payable = $(rows).find(".payable");
+          var pay = $(rows).find(".pay");
+
+          var totalval = $('.grandtotal').val();
+          var payableval = $('.payable').val();
+          var pdiscount = $('.gdiscount').val();
+          var payval = $('.pay').val();
+
+            var returnval;
+            payableval = Math.round(totalval - (pdiscount * totalval)/100);
+            discountamount = Math.round(pdiscount * totalval)/100;
+            $(".payable").val(payableval.toFixed(2));
+            //console.log(payableval);
+              returnval = payval - payableval;
+            if(returnval<=0){
+                  $(".due").val(Math.abs(returnval).toFixed(2));
+                  $(".payable").val(payableval.toFixed(2));
+                  var returnval = 0;
+              }else if(returnval > 0){
+                 $(".due").val('');
+                 $(".payable").val(payableval.toFixed(2));
+              }
+              $(".return").val(returnval.toFixed(2));
+              $(".payable").val(payableval.toFixed(2));
+              $(".total_discount").val(discountamount.toFixed(2));
+
+        });
+      });
+    </script>
+
+
+
+    <!--sale & invoice & print data-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+        $("#salesposSubmit").on('click',function (event) {
+            event.preventDefault();
+    var x = document.forms['SalesFormConfirm']["pay"].value;
+    if (x == "") {
+        alert("Name must be filled out");
+        //console.log('fgf');
+    } else {
+            var formval = $('#SalesFormConfirm')[0];
+            var data = new FormData(formval);
+            $.ajax({
+                type: "POST",
+                url: '{{ route('savePosInvoice') }}',
+                dataType: 'html',
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+            success: function(response){
+                //console.log(response);
+                $('#SalesFormConfirm')[0].reset();
+                $('#SalesForm')[0].reset();
+                //document.getElementById("posinfo")[0].reset();
+                $("#invoicedom").html(response);
+                window.setTimeout(function() {
+                    //  location.reload();
+                }, 6000);
+                // $("#invoicemodal").modal("show");
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {
+                mode: mode,
+                popClose: close
+            };
+            $("div#invoicedom").printArea(options);
+                //$("#invoicemodal").modal("close");
+
+            },
+            error: function(response) {
+            console.error();
+            }
+            });
+    }
+            });
+
+    });
+    </script>
 
     <script>
         $(".close").click(function() {
@@ -680,4 +776,5 @@
         $('.select2').select2();
         });
     </script>
+
 @endpush

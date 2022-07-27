@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sales;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Medicine\Medicine;
+use App\Models\Medicine\Generic;
 use App\Models\Customer\Customers;
 use App\Models\Customer\Customer_ledger;
 use Illuminate\Support\Facades\Auth;
@@ -76,7 +77,7 @@ class SalesController extends Controller
             } ;
     }
 
-    public function superMedicinepos(Request $request)
+    public function specificMedicine(Request $request)
     {
         $id = $request->id ;
         $data = [];
@@ -264,6 +265,8 @@ class SalesController extends Controller
                     ->limit(10)
                     ->get();
 
+        date_default_timezone_set("Asia/Dhaka");
+        $today = strtotime(date('Y/m/d'));
 
         foreach ($medicine as $row){
             $new_row['label']=htmlentities(stripslashes($row['name']));
@@ -277,11 +280,37 @@ class SalesController extends Controller
             $b = strtotime($a);
             if($today >= $b){
                 $new_row['expiry']=htmlentities(stripslashes($row['expire_date']));
-                  } else {
+            } else {
                  $new_row['expiry']=htmlentities(stripslashes(0));
-                  }
+            }
             $row_set[] = $new_row; //build an array
             }
             echo json_encode($row_set); //format the array into json data
+    }
+
+    public function similarGenericMed(Request $request)
+    {
+        $pid = $request->id;
+
+        $medicine = Medicine::query()
+                    ->where('company_id',1)
+                    ->where('id', $pid)
+                    ->with('medicine_type')
+                    ->with('generic')
+                    ->with('strength')
+                    ->first();
+
+        $gen_id = $medicine->generic_id ;
+
+        $medicine = Medicine::query()->where('company_id',1)->where('generic_id',$gen_id)->get();
+
+        foreach($medicine as $value){
+            echo "<option value='$value->id'>$value->name</option>";
+        }
+    }
+
+    public function genericMed(Request $request)
+    {
+        $id = $request->id;
     }
 }

@@ -210,8 +210,9 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/GetcustomerBalance', [SalesController::class, 'customerBalancebyID'])->name('customerBalance');
 
 
-    Route::get('/GetsuperProductPOS', [SalesController::class, 'superMedicinepos'])->name('superProductPOS');
+    Route::get('/getSpecificMedicine', [SalesController::class, 'specificMedicine'])->name('getSpecificMedicine');
     Route::post('/addMedicinetorow', [SalesController::class, 'medicineTorow'])->name('addMedicinetorow');
     Route::post('/getMedicineAutoComp', [SalesController::class, 'medicineAuTorow'])->name('getMedicineauto');
+    Route::get('/getsimilarGenericMed', [SalesController::class, 'similarGenericMed'])->name('similarGenericMed');
 });
 
