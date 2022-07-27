@@ -490,7 +490,8 @@
                         // Populate the form fields with the data returned from server
                         $('#SalesForm').find('[name="mrp"]').val(response.mvalue.mrp).end();
                         $('#SalesForm').find('[name="stock"]').val(response.mvalue.in_stock).end();
-                        $('#SalesForm').find('[name="exp"]').val(response.mvalue.expire_date).end();                     $('#SalesForm').find('[name="proname"]').val(response.mvalue.product_name+'('+response.mvalue.strength+')').end();
+                        $('#SalesForm').find('[name="exp"]').val(response.mvalue.expire_date).end();
+                        $('#SalesForm').find('[name="proname"]').val(response.mvalue.product_name+'('+response.mvalue.strength+')').end();
                         $('#SalesForm').find('[name="genname"]').val(response.mvalue.generic.name).end();
                         $('#SalesForm').find('[name="qty"]').attr("max",response.mvalue.in_stock).end();
                     });
@@ -566,6 +567,107 @@
         }
     });
         </script>
+
+        <!-- Medicine remove after add to row -->
+  <script>
+    $(document).ready(function () {
+    $(document).on('click','#tremove',function(e) {
+        e.preventDefault();
+            var rows = this.closest('#SalesFormConfirm tr');
+            var discount = parseFloat($(".gdiscount").val());
+            var total = parseFloat($(".grandtotal").val());
+            var payt = parseFloat($(".payable").val());
+            var t = parseFloat($(this).attr('data-total'));
+            var tl = parseFloat($(this).attr('data-totall'));
+            var d = parseFloat($(this).attr('data-discount'));
+            var atotal = parseFloat(total - tl);
+            var ptotal = parseFloat(payt - t);
+            var adiscount = parseFloat(discount - d);
+            $('.grandtotal').val(atotal);
+            $('.payable').val(ptotal.toFixed(2));
+            $('.gdiscount').val(adiscount.toFixed(2));
+            $(this).closest('tr').remove();
+        });
+        });
+  </script>
+
+
+  <!-- Medicine Auto Complete Search -->
+  <script>
+    $( function() {
+    $(this.target).find('input').autocomplete();
+     $( "#product_name" ).autocomplete({
+      source: function( request, response ) {
+       // Fetch data
+       $.ajax({
+        url: '{{ route('getMedicineauto') }}',
+        type: 'post',
+        dataType: "json",
+        cache: false,
+        data: {
+            search: request.term,
+            _token: '{{ csrf_token() }}'
+        },
+        success: function(data) {
+         response( data );
+        }
+       });
+      },
+      select: function (event, ui) {
+       // Set selection
+          //console.log('dsdsfsd');
+       $('#proid').val(ui.item.value); // display the selected text
+       $('#proname').val(ui.item.label); // display the selected text
+       $('#product_name').val(''); // display the selected text
+       $('#genname').val(ui.item.genval); // save selected id to input
+       $('#mrp').val(ui.item.mrp); // save selected id to input
+       $('#stock').val(ui.item.stock); // save selected id to input
+          $("#expiry").html(ui.item.expiry);
+          if(ui.item.expiry=='0'){
+              $("#expiry").hide();
+          } else {
+              $("#expiry").show();
+              console.log(ui.item.expiry);
+          }
+
+            var pid = ui.item.value;
+            //console.log(pid);
+            $.ajax({
+              url: '<?php echo base_url() ?>Invoice/GetSimilarGenericdata?id=' +pid,
+              method: 'GET',
+              data: 'data',
+            }).done(function (response) {
+              //console.log(response);
+              $('.generic').html(response);
+            });
+          $("#product_name").autocomplete('close');
+          $('#qty').attr('tabindex', 4).focus();
+          return false;
+
+      },
+    open: function(e, ui){
+
+        var val = $('.ui-autocomplete > li').length;
+        console.log(val);
+    if (val == 1)
+          {
+          $(".ui-menu-item:eq(0)").trigger("click");
+        $("#product_name").autocomplete('close');
+        //$("#product_name").autocomplete('destroy');
+              console.log(val);
+          return false;
+          } else if(val == 2) {
+              $(".ui-menu-item:eq(1)").trigger("click");
+        $("#product_name").autocomplete('close');
+        //$("#product_name").autocomplete('destroy');
+              console.log(val);
+          return false;
+          }
+        }
+     });
+     });
+      //console.log(id);
+  </script>
 
 
 

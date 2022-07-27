@@ -212,5 +212,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/GetsuperProductPOS', [SalesController::class, 'superMedicinepos'])->name('superProductPOS');
     Route::post('/addMedicinetorow', [SalesController::class, 'medicineTorow'])->name('addMedicinetorow');
+    Route::post('/getMedicineAutoComp', [SalesController::class, 'medicineAuTorow'])->name('getMedicineauto');
 });
 
