@@ -41,6 +41,7 @@ class CreateMedicineTable extends Migration
             $table->string('details',150)->nullable();
             $table->string('side_effect',100)->nullable();
             $table->string('in_stock',10)->default(0);
+            $table->string('sale_qty',10)->default(0)->nullable();
             $table->string('short_stock',10)->default(1);
             $table->boolean('favourite')->default(0)->nullable();
             $table->boolean('is_discount')->default(1);

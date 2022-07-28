@@ -39,6 +39,7 @@ class Medicine extends Model
         'details',
         'side_effect',
         'in_stock',
+        'sale_qty',
         'short_stock',
         'favourite',
         'is_discount',

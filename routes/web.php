@@ -214,5 +214,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/addMedicinetorow', [SalesController::class, 'medicineTorow'])->name('addMedicinetorow');
     Route::post('/getMedicineAutoComp', [SalesController::class, 'medicineAuTorow'])->name('getMedicineauto');
     Route::get('/getsimilarGenericMed', [SalesController::class, 'similarGenericMed'])->name('similarGenericMed');
+    Route::post('/posInvoiceSave', [SalesController::class, 'sellMedicine'])->name('savePosInvoice');
 });
 

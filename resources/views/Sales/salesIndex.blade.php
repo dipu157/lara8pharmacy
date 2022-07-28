@@ -290,10 +290,6 @@
                                     </div>
                                     <input type="hidden" id="cid" name="cid" value=''
                                         tabindex="-1">
-                                    <input type="hidden" id="cus_name" placeholder="Name" name="cus_name"
-                                        value='' tabindex="-1">
-                                    <input type="hidden" id="cus_mob" name="cus_mob"
-                                        placeholder="Contact No." value='' tabindex="-1">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <button type="submit" id="salesposSubmit"
@@ -350,17 +346,6 @@
     <script>
         $('#salesposSubmit').hide();
         $('#cusid').attr('tabindex', 1).focus();
-    </script>
-
-    <!--Walkin customer name , phone number fillup-->
-    <script type="text/javascript">
-        $('#customer_name').on('keyup', function() {
-            $('#cus_name').val($(this).val());
-        });
-
-        $('#cus_contact').on('keyup', function() {
-            $('#cus_mob').val($(this).val());
-        });
     </script>
 
         <!-- Customer Search Autocomplete -->
@@ -509,17 +494,7 @@
 
                       $('.payable').val(sum.toFixed(2));
                   }
-                  // function calc_discount(){
-                  //     var discount = 0;
-                  //     $(".discount").each(function(){
-                  //         discount += parseFloat($(this).val());
-                  //     });
-                  //     $('.gdiscount').val(discount);
-                  // }
                   $('#salesposSubmit').show();
-                //  $('#saleSubmit').show();
-                //  $('#FinalSubmit').show();
-                //  $('#Billhold').show();
                   $('#qty').val("");
                   $('.mrp').val("");
                   $('.stock').val("");
@@ -723,7 +698,7 @@
             event.preventDefault();
     var x = document.forms['SalesFormConfirm']["pay"].value;
     if (x == "") {
-        alert("Name must be filled out");
+        alert("Quantity must be filled out");
         //console.log('fgf');
     } else {
             var formval = $('#SalesFormConfirm')[0];
