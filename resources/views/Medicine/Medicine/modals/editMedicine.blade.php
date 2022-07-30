@@ -11,7 +11,7 @@
 
         <form action="#" method="post" accept-charset="utf-8" class="form-horizontal" id="edit_Medicine_form">
           @csrf
-            <input type="text" id="medicine_id" name="id">
+            <input type="hidden" id="medicine_id" name="id">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">

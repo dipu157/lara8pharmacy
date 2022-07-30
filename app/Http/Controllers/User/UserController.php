@@ -11,7 +11,7 @@ use App\Models\Common\Employee;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -41,7 +41,7 @@ class UserController extends Controller
        return view('User.userIndex',compact('roles','employees'));
     }
 
-    
+
     public function getAllUser()
     {
        // echo $current = Carbon::now()->format('Y-m-d');
@@ -91,8 +91,8 @@ class UserController extends Controller
 
         $user = User::find($request->id);
         $userData = [
-            'role_id' => $request->role_id, 
-            'employee_id' => $request->employee_id, 
+            'role_id' => $request->role_id,
+            'employee_id' => $request->employee_id,
             'email' => $request->email,
         ];
 

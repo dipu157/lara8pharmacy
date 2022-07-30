@@ -131,7 +131,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('createPurchase') }}" class="nav-link">
+                <a href="{{ route('createSales') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create Sales</p>
                 </a>
@@ -156,7 +156,31 @@
               <li class="nav-item">
                 <a href="pages/tables/simple.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Simple Tables</p>
+                  <p>Medicine Stock</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/tables/simple.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Short Stock</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/tables/simple.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Out of Stock</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/tables/simple.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Expired Medicine</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/tables/simple.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Soon Expired Medicine</p>
                 </a>
               </li>
             </ul>

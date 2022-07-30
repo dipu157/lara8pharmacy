@@ -1,1 +1,26 @@
-employee validation
+# LogOut if Password Change
+## Problem after New User Create/ OFF auto login after create user
+# Problem in employee Edit DOB,Gender
+## User Profile Drop down not working on manage user menu
+## No sidebar Drop down working except Home and manage user menu
+# Image Preview in add new employee
+# Image Preview in update user
+# check error message for every page
+# Re Design the dashboard
+# Sales History Not done
+# Make all the Dropdown autocomplete or select2
+# Current Date on create purchase
+# Correct all the DataTable
+# Add customer customer type problem
+# Medicine Dropdown area not ok
+# Supplier Partial Payment
+# Customer Payment 
+# POS payment type and refd doctor
+# Print button in cash memo
+# Create Some Report (necessity wise pdf and excel download)
+	-- Daily/Monthly Sales Report - return report
+	-- Daily/Monthly Purchase Report - return report
+	-- Daily/Monthly Income/Expense Report
+	-- User wise Report
+	-- supplier list, medicine list, supplier wise medicine list
+# In inventory stock,short stock,out of stock, expired, soon expired
