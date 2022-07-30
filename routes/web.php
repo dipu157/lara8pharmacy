@@ -215,5 +215,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/getMedicineAutoComp', [SalesController::class, 'medicineAuTorow'])->name('getMedicineauto');
     Route::get('/getsimilarGenericMed', [SalesController::class, 'similarGenericMed'])->name('similarGenericMed');
     Route::post('/posInvoiceSave', [SalesController::class, 'sellMedicine'])->name('savePosInvoice');
+
+
+    // Sates Return Route
+    Route::get('/salesReturn', [SalesController::class, 'returnMedicine'])->name('salesReturn');
+    Route::post('/searchSaleInvoice', [SalesController::class, 'invoiceSearch'])->name('searchSaleInvoice');
+    Route::post('/saveSalesReturn', [SalesController::class, 'salesReturnSave'])->name('saveSalesReturn');
 });
 

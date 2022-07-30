@@ -25,7 +25,7 @@ class CreateSalesTable extends Migration
             $table->integer('payment_type_id')->unsigned()->nullable();
             $table->foreign('payment_type_id')->references('id')->on('payment_types');
             $table->decimal('total_amount',15,2)->default(0);
-            $table->string('p_discount',20);
+            $table->string('p_discount',20)->nullable();
             $table->decimal('total_discount',15,2)->default(0);
             $table->decimal('net_amount',15,2)->default(0);
             $table->decimal('paid_amount',15,2)->default(0);
