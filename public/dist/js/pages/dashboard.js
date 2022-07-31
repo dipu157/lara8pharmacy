@@ -6,7 +6,16 @@
  **/
 
 /* global moment:false, Chart:false, Sparkline:false */
+$(document).ready(function () {
+    if(!/home/.test(location.href)) {
+        $('.nav-item').click(function () {
+          if($(this).hasClass('menu-open')) {
+            $(this).removeClass('menu-open');
+          }
+        });
+    }
 
+  });
 $(function () {
   'use strict'
 
