@@ -70,7 +70,7 @@
 		$("table").DataTable({
 		      "responsive": true, "lengthChange": false, "autoWidth": false,
 		      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-		    }).buttons().container().appendTo('#getAllgeneric_wrapper .col-md-6:eq(0)');
+		    }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
 
 		}
 		});
@@ -96,7 +96,11 @@
 	$("#add_generic_btn").text('SAVE');
 	$("#add_generic_form")[0].reset();
 	$("#addGenericModal").modal('hide');
-	}
+	},
+    error: function(xhr, status, error) {
+    var err = JSON.parse(xhr.responseText);
+    toastr.error(err.Message);
+    }
 
 	});
 	});

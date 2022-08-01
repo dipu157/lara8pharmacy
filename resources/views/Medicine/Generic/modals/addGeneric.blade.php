@@ -23,7 +23,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                           @enderror
-                          
+
                         </div>
                         <div class="row">
                           <!-- /.col -->
@@ -35,7 +35,7 @@
                   </form>
                  </div>
               </div>
-              
+
             </div>
 
 

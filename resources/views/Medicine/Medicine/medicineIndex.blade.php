@@ -55,6 +55,10 @@
 
 @include('assets.js.themejs')
 
+<script>
+    $(".myselect").select2({ dropdownParent: "#addMedicineModal" });
+  </script>
+
     <script type="text/javascript">
 
     	// Get All Medicine function acll
@@ -224,12 +228,5 @@
 		})
 	});
 
-    </script>
-
-    <script>
-    	$(function () {
-
-    		$('.select2').select2();
-    	});
     </script>
 @endpush

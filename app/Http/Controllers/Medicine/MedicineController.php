@@ -34,19 +34,19 @@ class MedicineController extends Controller
 
         $strength = Strength::query()->where('company_id',$this->company_id)
                         ->where('status',true)
-                        ->pluck('strength','id');
+                        ->get();
 
         $supplier = Supplier::query()->where('company_id',$this->company_id)
                         ->where('status',true)
-                        ->pluck('name','id');
+                        ->get();
 
         $generic = Generic::query()->where('company_id',$this->company_id)
                         ->where('status',true)
-                        ->pluck('name','id');
+                        ->get();
 
         $medicine_type = Medicine_Type::query()->where('company_id',$this->company_id)
                         ->where('status',true)
-                        ->pluck('name','id');
+                        ->get();
 
         return view('Medicine.Medicine.medicineIndex',compact('shelf','strength','supplier','generic','medicine_type'));
 

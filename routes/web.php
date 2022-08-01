@@ -208,6 +208,9 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/createSales', [SalesController::class, 'index'])->name('createSales');
 	Route::post('/GetCustomerInfobyId', [SalesController::class, 'customerById'])->name('GetCustomerId');
 	Route::get('/GetcustomerBalance', [SalesController::class, 'customerBalancebyID'])->name('customerBalance');
+	Route::get('/AllsalesHistory', [SalesController::class, 'allSale'])->name('salesHistory');
+	Route::get('/Allsales', [SalesController::class, 'allSalelist'])->name('allSale');
+    Route::get('/saleinvoiceDetails', [SalesController::class, 'invoiceDetails'])->name('saleInvoiceDetails');
 
 
     Route::get('/getSpecificMedicine', [SalesController::class, 'specificMedicine'])->name('getSpecificMedicine');

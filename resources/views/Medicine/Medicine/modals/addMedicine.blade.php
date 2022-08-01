@@ -24,16 +24,22 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Shelf</label>
-                            {!! Form::select('shelf_id',$shelf,null,array('id'=>'shelf_id','class'=>'form-control select2','name'=>'shelf_id')) !!}
+                            {!! Form::select('shelf_id',$shelf,null,array('id'=>'shelf_id','class'=>'form-control myselect','name'=>'shelf_id')) !!}
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Supplier</label>
-                            {!! Form::select('supplier_id',$supplier,null,array('id'=>'supplier_id','class'=>'form-control','name'=>'supplier_id')) !!}
+                                <select class="form-control myselect" name="supplier_id">
+                                    <option value="">Select Supplier</option>
+                                  @foreach($supplier as $supplier)
+                                    <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                  @endforeach
+                                </select>
+
                         </div>
-                        </div>
+                    </div>
 
                         <div class="col-md-6">
                         <div class="form-group">
@@ -45,21 +51,36 @@
                         <div class="col-md-6">
                         <div class="form-group">
                             <label>Generic</label>
-                            {!! Form::select('generic_id',$generic,null,array('id'=>'generic_id','class'=>'form-control','name'=>'generic_id')) !!}
+                                <select class="form-control myselect" name="generic_id">
+                                    <option value="">Select Generic</option>
+                                    @foreach($generic as $generic)
+                                    <option value="{{ $generic->id }}">{{ $generic->name }}</option>
+                                    @endforeach
+                                </select>
                         </div>
                         </div>
 
                         <div class="col-md-6">
                         <div class="form-group">
                             <label>Strength</label>
-                            {!! Form::select('strength_id',$strength,null,array('id'=>'strength_id','class'=>'form-control','name'=>'strength_id')) !!}
+                                    <select class="form-control myselect" name="strength_id">
+                                      <option value="">Select Strength</option>
+                                      @foreach($strength as $strength)
+                                        <option value="{{ $strength->id }}">{{ $strength->strength }}</option>
+                                      @endforeach
+                                    </select>
                         </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                               <label>Medicine Type</label>
-                              {!! Form::select('medicine_type_id',$medicine_type,null,array('id'=>'medicine_type_id','class'=>'form-control','name'=>'medicine_type_id')) !!}
+                                    <select class="form-control myselect" name="medicine_type_id">
+                                      <option value="">Select Medicine Type</option>
+                                      @foreach($medicine_type as $medicine_type)
+                                        <option value="{{ $medicine_type->id }}">{{ $medicine_type->name }}</option>
+                                      @endforeach
+                                    </select>
                             </div>
                         </div>
 

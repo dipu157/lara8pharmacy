@@ -54,7 +54,7 @@
                                         <label class="control-label">Supplier Name</label>
                                         {!! Form::select('supplier_id', $supplier, null, [
                                             'id' => 'supplier_id',
-                                            'class' => 'form-control selsect2',
+                                            'class' => 'form-control myselect',
                                             'name' => 'supplier_id',
                                             'placeholder' => 'Select Supplier',
                                         ]) !!}
@@ -177,6 +177,10 @@
 
 @push('scripts')
     @include('assets.js.themejs')
+
+    <script>
+        $(".myselect").select2();
+      </script>
 
     <!--Get supplier product-->
     <script type="text/javascript">

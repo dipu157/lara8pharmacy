@@ -768,4 +768,55 @@ class SalesController extends Controller
             }
         }
     }
+
+    public function allSale()
+    {
+
+        return view('Sales.salesHistory');
+    }
+
+    public function allSalelist()
+    {
+        $sale = Sales::all();
+        $output = '';
+        if ($sale->count() > 0) {
+            $output .= '<table id="example1" class="table table-striped table-sm text-center align-middle">
+            <thead>
+                <tr>
+                    <th>SL</th>
+                    <th>Customer Name</th>
+                    <th>Invoice No</th>
+                    <th>Sale Date</th>
+                    <th>Total</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody>';
+            foreach ($sale as $row) {
+                $output .= '<tr>
+                <td>' . $row->id . '</td>
+                <td>' . $row->customer->name . '</td>
+                <td><a href="' . route('saleInvoiceDetails', ['id' => $row->id]) . '">' . $row->invoice_no . '</a></td>
+                <td>' . $row->sale_date . '</td>
+                <td>' . $row->net_amount . '</td>
+                <td>
+                  <a href="#" id="' . $row->id . '" class="text-success mx-1" data-toggle="modal" data-target="#"><i class="fa fa-print"></i></a>
+                </td>
+              </tr>';
+            }
+            $output .= '</tbody></table>';
+            echo $output;
+        } else {
+            echo '<h1 class="text-center text-secondary my-5">No Record Found in Database</h1>';
+        }
+    }
+
+    public function invoiceDetails(Request $request)
+    {
+        $id = $request->id;
+
+        $saleDetails = SalesDetails::query()->where('company_id', 1)->where('sales_id', $id)->get();
+
+        return view('Sales.salesDetilsByInvoice', compact('saleDetails'));
+    }
 }

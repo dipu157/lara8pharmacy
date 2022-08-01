@@ -103,7 +103,7 @@ $links = [
                 'icon' => 'far fa-circle',
             ],
             [
-                'route' => route('purchaseHistory'),
+                'route' => route('salesHistory'),
                 'name' => 'Sales History',
                 'icon' => 'far fa-circle',
             ],

@@ -35,7 +35,7 @@ class GenericController extends Controller
         $users = Generic::all();
         $output = '';
         if($users->count() > 0){
-            $output .= '<table id="getAllgeneric" class="table table-striped table-sm text-center align-middle">
+            $output .= '<table id="example2" class="table table-striped table-sm text-center align-middle">
             <thead>
                 <tr>
                     <th>ID</th>
