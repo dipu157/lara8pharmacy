@@ -18,6 +18,7 @@ use App\Http\Controllers\Customer\Customer_ledgerController;
 use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\Purchase\PurchaseController;
 use App\Http\Controllers\Sales\SalesController;
+use App\Models\User;
 use Illuminate\Routing\RouteGroup;
 
 /*
@@ -33,9 +34,9 @@ use Illuminate\Routing\RouteGroup;
 
 Route::get('/', function () { return view('auth.login'); });
 
-
 // Common Route
 Route::group(['middleware' => ['auth']], function () {
+
     Route::view('home','dashboard');
 
     Route::get('/home', function () { return view('dashboard');})->name('home');
@@ -65,6 +66,7 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth']], function () {
 
 	Route::get('/manageUser', [UserController::class, 'index'])->name('user');
+    Route::post('/register', [UserController::class, 'store'])->name('register');
 	Route::get('/allUser', [UserController::class, 'getAllUser'])->name('allUser');
 	Route::delete('/deleteUser', [UserController::class, 'delete'])->name('deleteUser');
 	Route::get('/editUser', [UserController::class, 'edit'])->name('edit.user');

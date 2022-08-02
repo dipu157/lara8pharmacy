@@ -1,4 +1,3 @@
-## Problem after New User Create/ OFF auto login after create user
 # In POS Medicine Dropdown area not ok
 # Print button in cash memo
 # user role

@@ -15,20 +15,6 @@ $(document).ready(function () {
         });
     }
 
-    if(/manageUser/.test(location.href)) {
-        $('.userProfile').click(function () {
-            if($(this).attr("aria-expanded","true")) {
-                $(".up").removeClass('show');
-                $(this).attr("aria-expanded","false");
-                $(".dropdown-menu").removeClass('show');
-              }else{
-                $(".up").addClass('show');
-                $(this).attr("aria-expanded","true");
-                $(".dropdown-menu").addClass('show');
-              }
-        });
-    }
-
   });
 $(function () {
   'use strict'

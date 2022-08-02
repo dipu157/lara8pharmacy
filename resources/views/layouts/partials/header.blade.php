@@ -98,8 +98,8 @@
             @endif
             @else
 
-            <li class="nav-item up">
-              <a style="font-weight: bold; color: red" class="nav-link userProfile" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0)">USER PROFILE </a>
+            <li class="nav-item">
+              <a style="font-weight: bold; color: red" class="nav-link" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0)">USER PROFILE </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
               <span class="dropdown-item dropdown-header">Update User Profile</span>
               <div class="dropdown-divider"></div>

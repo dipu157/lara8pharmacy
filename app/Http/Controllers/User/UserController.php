@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Laravel\Fortify\Contracts\RegisterResponse;
+use Laravel\Fortify\Contracts\RegisterViewResponse;
+use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
 {
@@ -39,6 +43,13 @@ class UserController extends Controller
       // dd($employees);
 
        return view('User.userIndex',compact('roles','employees'));
+    }
+
+    public function store(Request $request,
+                          CreatesNewUsers $creator): RegisterResponse
+    {
+        event(new Registered($user = $creator->create($request->all())));
+        return app(RegisterResponse::class);
     }
 
 

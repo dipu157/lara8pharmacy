@@ -54,8 +54,6 @@
 
 @push('scripts')
 
-@include('layouts.partials.footer')
-
     <script type="text/javascript">
 
     	// Get All User function acll
@@ -91,7 +89,7 @@
 	processData: false,
 	contentType: false,
 	success: function(res){
-	if(res.status == 200){
+	if(res.status == 302){
         toastr.success('User Create Successfully');
 		fetchAllUsers();
 	}
@@ -184,7 +182,7 @@
 		});
 		}
 		})
-	});
+	    });
     </script>
 
     <script>

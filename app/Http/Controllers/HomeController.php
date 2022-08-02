@@ -7,8 +7,8 @@ use App\Models\User;
 use App\Models\Common\Company;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Auth;
-use Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
