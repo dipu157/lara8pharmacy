@@ -38,7 +38,7 @@
                                         </div>
 
                                         <div class="col-md-1">
-                                            <a href="" target="_blank"
+                                            <a href="{{ route('salesHistory') }}" target="_blank"
                                                 class="btn btn-sm btn-info waves-effect waves-light"
                                                 tabindex="-1"><b>Invoice</b></a>
                                         </div>
@@ -740,7 +740,7 @@
                 window.setTimeout(function() {
                     //  location.reload();
                 }, 6000);
-                $("#invoicemodal").modal("show");
+                //$("#invoicemodal").modal("show");
             var mode = 'iframe'; //popup
             var close = mode == "popup";
             var options = {
@@ -755,7 +755,7 @@
             console.error();
             }
             });
-    }
+            }
             });
 
     });

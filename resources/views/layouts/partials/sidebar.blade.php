@@ -40,7 +40,7 @@ $links = [
                 'route' => route('manageSupplier'),
                 'name' => 'Manage Supplier',
                 'icon' => 'far fa-circle',
-                'role' => [2,3],
+                'role' => [1,2,3],
             ],
             [
                 'route' => route('supplierLedger'),

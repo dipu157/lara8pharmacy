@@ -18,3 +18,4 @@
 <script src="{{asset('/')}}plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->
 <script src="{{asset('/')}}plugins/toastr/toastr.min.js"></script>
+<script src="{{asset('/')}}plugins/jquery/jquery.Printarea.js"></script>
