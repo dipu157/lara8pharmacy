@@ -145,7 +145,15 @@
 			$("#edit_generic_btn").text('Update');
 			$("#edit_generic_form")[0].reset();
 			$("#editGenericModal").modal('hide');
+			},
+            error: function(response) {
+                if (response.status != 200) {
+				toastr.error('Update Failed');
+				fetchAllgenerics();
 			}
+			$("#edit_generic_btn").text('Update');
+			$("#editGenericModal").modal('hide');
+            }
 		});
 	});
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Medicine\Generic;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class GenericController extends Controller
 {
@@ -89,6 +90,10 @@ class GenericController extends Controller
     }
 
     public function update(Request $request) {
+
+        if (Gate::allows('manager') || Gate::allows('user')) {
+            abort(403);
+        }
 
         $generic = Generic::find($request->id);
         $data = [
