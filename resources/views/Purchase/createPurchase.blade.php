@@ -70,8 +70,8 @@
                                 <div class="col-md-2">
                                     <div class="form-group" style="margin-bottom: 15px">
                                         <label class="control-label">Invoice Date</label>
-                                        <input type="date" id="datepicker" class="form-control datepicker" placeholder=""
-                                            name="purchase_date" required autocomplete="off">
+                                        <input type="date" id="purchase_date" class="form-control"
+                                            name="purchase_date" value="<?php echo date('Y-m-d')?>" required autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-md-5">
@@ -152,7 +152,7 @@
                                         <td><input type="text" name="receiver_contact" id="rcontact"
                                                 class="form-control" placeholder="Receiver Contact" value=""></td>
                                         <td><input type="date" name="issue_date" class="form-control datepicker"
-                                                placeholder="Pay Date" value=""></td>
+                                                placeholder="Pay Date" value="<?php echo date('Y-m-d')?>"></td>
                                         <td class="text-right"> <input type="submit" id="purchasesubmit"
                                                 class="btn btn-primary btn-block" value="Review Order"
                                                 style="color:white"> </td>

@@ -36,7 +36,7 @@
 
                   <div class="form-group">
                     <label>Customer Type</label>
-                    <select class="form-control select2" id="customer_type" name="customer_type" style="width: 100%;">
+                    <select class="form-control" id="customer_type" name="customer_type" style="width: 100%;">
                       <option value="walkin">Walk IN</option>
                       <option value="regular">Regular</option>
                     </select>

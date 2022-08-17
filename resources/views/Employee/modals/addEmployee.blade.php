@@ -14,14 +14,14 @@
 
                 <div class="modal-body">
                 <div class="row">
-                  
+
                   <div class="col-md-6">
                       <div class="form-group">
                         <label>First Name</label>
                         <input type="text" id="fname" class="form-control" name="first_name" placeholder="First Name">
                       </div>
                   </div>
-                  
+
                    <div class="col-md-6">
                       <div class="form-group">
                         <label>Last Name</label>
@@ -46,7 +46,7 @@
                         </div>
                       </div>
                   </div>
-                  
+
                    <div class="col-md-6">
                       <div class="form-group">
                         <label>Phone</label>
@@ -64,8 +64,7 @@
                           <input type="radio" id="gender2" name="gender" value="f">
                           <label for="gender2">Female </label>
                         </div>
-                    </div>
-
+                        </div>
                       </div>
                    </div>
 
@@ -108,11 +107,13 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Photo</label>
-                            <input type="file" class="form-control" id="photo" name="photo">                            
+                            <input type="file" class="form-control" id="photo" name="photo" onchange="loadFile(event)">
                           </div>
                         </div>
                         <div class="col-md-6">
-                          <span id="photo">preview</span>
+                          <span id="photo">
+                            <img id="output" height="120px" width="100px" />
+                          </span>
                         </div>
                       </div>
                    </div>
@@ -131,4 +132,15 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
+
+    <script>
+    var loadFile = function(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+        var output = document.getElementById('output');
+        output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    };
+    </script>
 

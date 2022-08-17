@@ -51,14 +51,14 @@
 
                   <input type="hidden" name="id" id="emp_id" value="{{ $emp->id }}">
                   <input type="hidden" name="emp_photo" id="emp_photo" value="{{ $emp->photo }}">
-                  
+
                   <div class="col-md-6">
                       <div class="form-group">
                         <label>First Name</label>
                         <input type="text" id="first_name" class="form-control" name="first_name" value="{{ $emp->first_name }}" placeholder="First Name">
                       </div>
                   </div>
-                  
+
                    <div class="col-md-6">
                       <div class="form-group">
                         <label>Last Name</label>
@@ -81,7 +81,7 @@
                         </div>
                       </div>
                   </div>
-                  
+
                    <div class="col-md-6">
                       <div class="form-group">
                         <label>Phone</label>
@@ -143,10 +143,11 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Photo</label>
-                            <input type="file" class="form-control" id="photo" name="photo">                            
+                            <input type="file" class="form-control" id="photo" name="photo">
                           </div>
                         </div>
                         <div class="col-md-6" id="emp_img">
+                            <img src="storage/images/{{Auth::user()->employee->photo}}" height="100px" width="70px" class="img-thumbnail" alt="User_Image">
                         </div>
                       </div>
                    </div>
@@ -160,7 +161,7 @@
             </form>
 	              <!-- /.col -->
 	            </div>
-           
+
 
           </div>
         </div>

@@ -4,11 +4,8 @@
 
 
 ==========================================================================
-# Problem in employee Edit DOB,Gender
-# Image Preview in add new employee
-# Image Preview in update user
+# Problem in employee Edit Gender
 # Re Design the dashboard
-# Current Date on create purchase
 # Supplier Partial Payment
 # Customer Payment 
 # POS payment type and refd doctor
@@ -18,8 +15,6 @@
 	-- Daily/Monthly Income/Expense Report
 	-- User wise Report
 	-- supplier list, medicine list, supplier wise medicine list
-# In inventory stock,short stock,out of stock, expired, soon expired
-# Add customer customer type problem
 # Correct all the DataTable
 # Validation in some pages
 # check error message for every page

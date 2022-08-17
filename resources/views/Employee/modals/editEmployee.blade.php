@@ -18,14 +18,14 @@
 
                   <input type="hidden" name="id" id="emp_id">
                   <input type="hidden" name="emp_photo" id="emp_photo">
-                  
+
                   <div class="col-md-6">
                       <div class="form-group">
                         <label>First Name</label>
                         <input type="text" id="first_name" class="form-control" name="first_name" placeholder="First Name">
                       </div>
                   </div>
-                  
+
                    <div class="col-md-6">
                       <div class="form-group">
                         <label>Last Name</label>
@@ -43,15 +43,14 @@
 
                       <div class="form-group">
                         <label>DOB</label>
-                        <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                          <input type="text" name="dob" id="emp_dob" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+                        <div class="input-group date" data-target-input="nearest">
+                          <input type="date" name="dob" id="emp_dob" class="form-control"/>
                           <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                           </div>
                         </div>
                       </div>
                   </div>
-                  
+
                    <div class="col-md-6">
                       <div class="form-group">
                         <label>Phone</label>
@@ -61,16 +60,15 @@
                       <div class="form-group">
                         <label>Gender</label>
                         <div class="form-group clearfix">
-                            <div class="icheck-primary d-inline">
-                              <input type="radio" id="gender1" name="gender" value="m">
-                              <label for="gender1">Male </label>
-                            </div>
-                            <div class="icheck-primary d-inline">
-                              <input type="radio" id="gender2" name="gender" value="f">
-                              <label for="gender2">Female </label>
-                            </div>
+                        <div class="icheck-primary d-inline">
+                          <input type="radio" id="gender1" name="gender" value="m">
+                          <label for="gender1">Male </label>
                         </div>
-
+                        <div class="icheck-primary d-inline">
+                          <input type="radio" id="gender2" name="gender" value="f">
+                          <label for="gender2">Female </label>
+                        </div>
+                        </div>
                       </div>
                    </div>
 
@@ -113,7 +111,7 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Photo</label>
-                            <input type="file" class="form-control" id="photo" name="photo">                            
+                            <input type="file" class="form-control" id="photo" name="photo">
                           </div>
                         </div>
                         <div class="col-md-6" id="emp_img">

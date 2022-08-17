@@ -18,6 +18,7 @@ use App\Http\Controllers\Customer\Customer_ledgerController;
 use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\Purchase\PurchaseController;
 use App\Http\Controllers\Sales\SalesController;
+use App\Http\Controllers\Inventory\InventoryController;
 use App\Models\User;
 use Illuminate\Routing\RouteGroup;
 
@@ -226,5 +227,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/salesReturn', [SalesController::class, 'returnMedicine'])->name('salesReturn');
     Route::post('/searchSaleInvoice', [SalesController::class, 'invoiceSearch'])->name('searchSaleInvoice');
     Route::post('/saveSalesReturn', [SalesController::class, 'salesReturnSave'])->name('saveSalesReturn');
+});
+
+// Inventory Route
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/medicineStock', [InventoryController::class, 'index'])->name('medicineStock');
+    Route::get('/shortStock', [InventoryController::class, 'shortStockMedicine'])->name('shortStock');
+    Route::get('/outStock', [InventoryController::class, 'outStockMedicine'])->name('outStock');
+    Route::get('/expiredMedicine', [InventoryController::class, 'expiredMedicineList'])->name('expiredMedicine');
+    Route::get('/soonExpiredMedicine', [InventoryController::class, 'soonExpiredMedicineList'])->name('soonExpiredMedicine');
 });
 

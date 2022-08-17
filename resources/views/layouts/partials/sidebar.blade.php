@@ -278,7 +278,7 @@ $links = [
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="pages/tables/simple.html" class="nav-link">
+                    <a href="{{ route('medicineStock') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Medicine Stock</p>
                     </a>
@@ -286,26 +286,26 @@ $links = [
 
                 @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                 <li class="nav-item">
-                    <a href="pages/tables/simple.html" class="nav-link">
+                    <a href="{{ route('shortStock') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Short Stock</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/tables/simple.html" class="nav-link">
+                    <a href="{{ route('outStock') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Out of Stock</p>
                     </a>
                 </li>
                 @endif
                 <li class="nav-item">
-                    <a href="pages/tables/simple.html" class="nav-link">
+                    <a href="{{ route('expiredMedicine') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Expired Medicine</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/tables/simple.html" class="nav-link">
+                    <a href="{{ route('soonExpiredMedicine') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Soon Expired Medicine</p>
                     </a>
