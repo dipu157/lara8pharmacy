@@ -69,6 +69,29 @@
 
 		}
 		});
+
+		//Edit Icon click for Supplier Edit
+		$(document).on('click', '.editIcon', function(e){
+		e.preventDefault();
+		let id = $(this).attr('id');
+		$.ajax({
+		url: '{{ route('edit.Supplier') }}',
+		method: 'get',
+		data: {
+		id: id,
+		_token: '{{ csrf_token() }}'
+		},
+		success: function(res){
+			console.log(res);
+			$("#supplier_id").val(res.id);
+			$("#name").val(res.name);
+			$("#email").val(res.email);
+			$("#address").val(res.address);
+			$("#phone").val(res.phone);
+			$("#note").val(res.regular_discount);
+		}
+		});
+		});
     }
 
     </script>

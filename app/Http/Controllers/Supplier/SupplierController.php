@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Supplier;
 
 use App\Http\Controllers\Controller;
+use App\Models\Purchase\Purchase;
 use Illuminate\Http\Request;
 use App\Models\Supplier\Supplier;
 use App\Models\Supplier\SupplierLedger;
@@ -40,7 +41,7 @@ class SupplierController extends Controller
                     <th>Code</th>
                     <th>Name</th>
                     <th>Phone</th>
-                    <th>action</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>';
@@ -152,7 +153,7 @@ class SupplierController extends Controller
                     <th>Total Balance</th>
                     <th>Paid</th>
                     <th>Due</th>
-                    <th>action</th>
+                    <th>Details</th>
                 </tr>
             </thead>
             <tbody>';
@@ -164,7 +165,7 @@ class SupplierController extends Controller
                 <td>'.$sl->paid.'</td>
                 <td>'.$sl->due.'</td>
                 <td>
-                  <a href="#" id="' . $sl->id . '" class="text-success mx-1 printIcon"><i class="fa fa-print"></i></a>
+                <a href="' . route('supplierAllInvoice', ['id' => $sl->id]) . '"> <i class="fas fa-bars"></i> </a>
                 </td>
               </tr>';
             }
@@ -176,4 +177,14 @@ class SupplierController extends Controller
 
      //   return view('employeeIndex');
     }
+
+    public function invoiceDetails(Request $request)
+    {
+        $id = $request->id;
+
+        $purchase = Purchase::query()->where('company_id', 1)->where('supplier_id', $id)->get();
+
+        return view('Supplier.SupplierLedger.billDetails', compact('purchase'));
+    }
+    
 }

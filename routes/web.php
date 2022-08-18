@@ -173,6 +173,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/manageSupplierLedger', [SupplierController::class, 'supplierLedgerIndex'])->name('supplierLedger');
     Route::get('/allSupplierLedger', [SupplierController::class, 'fetchAll'])->name('allSuppliersLedger');
+
+	Route::get('/invoicesBySupplier', [SupplierController::class, 'invoiceDetails'])->name('supplierAllInvoice');
 });
 
 
