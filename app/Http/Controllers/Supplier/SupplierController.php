@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Purchase\Purchase;
 use Illuminate\Http\Request;
 use App\Models\Supplier\Supplier;
+use App\Models\Supplier\SupplierAccount;
 use App\Models\Supplier\SupplierLedger;
+use App\Models\Supplier\SupplierPayment;
 use Illuminate\Support\Facades\Auth;
 
 class SupplierController extends Controller
@@ -182,9 +184,50 @@ class SupplierController extends Controller
     {
         $id = $request->id;
 
-        $purchase = Purchase::query()->where('company_id', 1)->where('supplier_id', $id)->get();
+        $purchase = SupplierAccount::query()->where('company_id', 1)->where('supplier_id', $id)->get();
 
         return view('Supplier.SupplierLedger.billDetails', compact('purchase'));
     }
-    
+
+    public function bill(Request $request){
+
+        $id = $request->id;
+        $supplier = SupplierAccount::find($id);
+        return response()->json($supplier);
+    }
+
+    public function pay(Request $request)
+    {
+        $supplierAcc = SupplierAccount::find($request->purchase_id);
+        // dd($supplierAcc);
+        $data = [
+            'paid_amount' => $supplierAcc->paid_amount + $request->paid_amount,
+            'due' => $supplierAcc->due - $request->paid_amount,
+        ];
+
+        $supplierAcc->update($data);
+
+        $supplierLed = SupplierLedger::find($request->supplier_id);
+        // dd($supplierAcc);
+        $data = [
+            'paid' => $supplierLed->paid + $request->paid_amount,
+            'due' => $supplierLed->due - $request->paid_amount,
+        ];
+
+        $supplierLed->update($data);
+
+        $supplierPay = SupplierPayment::find($request->purchase_id);
+        // dd($supplierAcc);
+        $data = [
+            'paid_amount' => $supplierPay->paid_amount + $request->paid_amount,
+        ];
+
+        $supplierPay->update($data);
+
+
+        return response()->json([
+            'status' => 200,
+        ]);
+    }
+
 }

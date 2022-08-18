@@ -175,6 +175,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/allSupplierLedger', [SupplierController::class, 'fetchAll'])->name('allSuppliersLedger');
 
 	Route::get('/invoicesBySupplier', [SupplierController::class, 'invoiceDetails'])->name('supplierAllInvoice');
+    Route::get('/billSupplier', [SupplierController::class, 'bill'])->name('bill.Supplier');
+    Route::post('/paySupplier', [SupplierController::class, 'pay'])->name('pay.Supplier');
 });
 
 

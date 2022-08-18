@@ -19,6 +19,8 @@
 	      </div><!-- /.container-fluid -->
     </section>
 
+    @include('Supplier.modals.supplierBillModal')
+
     <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -45,13 +47,13 @@
                     <tbody>
                       @foreach ($purchase as $row)
                     <tr>
-                      <td>{{ $row->invoice_no }}</td>
+                      <td>{{ $row->purchase->invoice_no }}</td>
                       <td>{{ $row->supplier->name }}</td>
-                      <td> {{ $row->purchase_date }}</td>
+                      <td> {{ $row->purchase->purchase_date }}</td>
                       <td>{{ $row->total_amount }}</td>
-                      <td>{{ $row->net_vat }}</td>
-                      <td>{{ $row->net_discount }}</td>
-                      <td></td>
+                      <td>{{ $row->paid_amount }}</td>
+                      <td>{{ $row->due }}</td>
+                      <td><a id="{{ $row->id }}" class="btn btn-sm btn-success paySupplier" data-toggle="modal" data-target="#supplierBillModal">Pay Bill</a></td>
                     </tr>
                     @endforeach
                     </tbody>
@@ -73,6 +75,58 @@
 @push('scripts')
 
     @include('assets.js.themejs')
+
+    <script type="text/javascript">
+
+    //Edit Icon click for Supplier Edit
+		$(document).on('click', '.paySupplier', function(e){
+		e.preventDefault();
+		let id = $(this).attr('id');
+		$.ajax({
+		url: '{{ route('bill.Supplier') }}',
+		method: 'get',
+		data: {
+		id: id,
+		_token: '{{ csrf_token() }}'
+		},
+		success: function(res){
+			console.log(res);
+			$("#id").val(res.id);
+			$("#supplier_id").val(res.supplier_id);
+			$("#purchase_id").val(res.purchase_id);
+			$("#total_amount").val(res.total_amount);
+			$("#due_amount").val(res.due);
+		}
+		});
+		});
+
+    // Add Supplier Code
+	$("#supplier_Bill_form").submit(function(e){
+	e.preventDefault();
+	const fd = new FormData(this);
+	$("#bill_payment_btn").text('Adding...');
+	$.ajax({
+	url: '{{ route('pay.Supplier') }}',
+	method: 'post',
+	data: fd,
+	cache: false,
+	processData: false,
+	contentType: false,
+	success: function(res){
+	if(res.status == 200){
+		toastr.success('Payment Save Successfully');
+        location.reload(true);
+	}
+	$("#bill_payment_btn").text('SAVE');
+	$("#supplier_Bill_form")[0].reset();
+	$("#supplierBillModal").modal('hide');
+	}
+
+	});
+	});
+
+
+    </script>
 
     <script type="text/javascript">
         $("table").DataTable({

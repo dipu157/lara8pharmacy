@@ -5,7 +5,7 @@ namespace App\Models\Purchase;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Supplier\Supplier;
-
+use App\Models\Supplier\SupplierPayment;
 
 class Purchase extends Model
 {
@@ -33,4 +33,5 @@ class Purchase extends Model
     {
         return $this->belongsTo(Supplier::class,'supplier_id','id');
     }
+
 }
