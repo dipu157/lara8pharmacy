@@ -16,8 +16,8 @@
                   <form action="#" method="post" accept-charset="utf-8" class="form-horizontal" id="add_doctor_form">
                       @csrf
                         <div class="input-group mb-3">
-                          <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name" name="name" value="{{ old('name') }}" required>
-
+                          <input type="text" class="form-control @error('name') is-invalid @enderror" minlength="4" placeholder="Name" name="name" value="{{ old('name') }}" required>
+                          <span class="text-danger" id="nameError"></span>
                           @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -77,7 +77,7 @@
                   </form>
                  </div>
               </div>
-              
+
             </div>
 
 

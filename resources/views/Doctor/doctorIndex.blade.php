@@ -90,22 +90,21 @@
 	processData: false,
 	contentType: false,
 	success: function(res){
-	if(res.status == 200){
-        toastr.success('Data Save Successfully');
-		fetchAllDoctors();
-	}
-	$("#add_doctor_btn").text('SAVE');
-	$("#add_doctor_form")[0].reset();
-	$("#addDoctorModal").modal('hide');
+        if(res.status == 200){
+            toastr.success('Data Save Successfully');
+            fetchAllDoctors();
+        }
+        $("#add_doctor_btn").text('SAVE');
+        $("#add_doctor_form")[0].reset();
+        $("#addDoctorModal").modal('hide');
 	},
-      error: function (res) {
-        toastr.error('Data Save Failed');
+    error: function (request, status, error) {
+        toastr.error(request.responseText);
         fetchAllDoctors();
         $("#add_doctor_btn").text('SAVE');
         $("#add_doctor_form")[0].reset();
         $("#addDoctorModal").modal('hide');
-      }
-
+    }
 	});
 	});
 

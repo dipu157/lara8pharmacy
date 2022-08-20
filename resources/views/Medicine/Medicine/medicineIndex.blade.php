@@ -188,7 +188,14 @@
 			$("#edit_Medicine_btn").text('Update');
 			$("#edit_Medicine_form")[0].reset();
 			$("#editMedicineModal").modal('hide');
-			}
+			},
+    error: function (request, status, error) {
+        toastr.error(request.responseText);
+        fetchAllMedicines();
+        $("#edit_Medicine_btn").text('Update');
+		$("#edit_Medicine_form")[0].reset();
+		$("#editMedicineModal").modal('hide');
+    }
 		});
 	});
 

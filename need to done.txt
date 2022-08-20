@@ -6,7 +6,6 @@
 ==========================================================================
 # Problem in employee Edit Gender
 # Re Design the dashboard
-# Supplier Partial Payment
 # Customer Payment 
 # POS payment type and refd doctor
 # Create Some Report (necessity wise pdf and excel download)
@@ -16,5 +15,4 @@
 	-- User wise Report
 	-- supplier list, medicine list, supplier wise medicine list
 # Correct all the DataTable
-# Validation in some pages
-# check error message for every page
+

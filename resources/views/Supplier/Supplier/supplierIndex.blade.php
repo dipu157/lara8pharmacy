@@ -146,7 +146,14 @@
 			$("#edit_Supplier_btn").text('Update');
 			$("#edit_Supplier_form")[0].reset();
 			$("#editSupplierModal").modal('hide');
-			}
+			},
+        error: function (request, status, error) {
+            toastr.error(request.responseText);
+            fetchAllSuppliers();
+            $("#edit_Supplier_btn").text('Update');
+			$("#edit_Supplier_form")[0].reset();
+			$("#editSupplierModal").modal('hide');
+        }
 		});
 	});
 

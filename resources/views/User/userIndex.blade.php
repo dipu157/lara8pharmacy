@@ -96,7 +96,14 @@
 	$("#add_user_btn").text('REGISTER');
 	$("#add_user_form")[0].reset();
 	$("#addUserModal").modal('hide');
-	}
+	},
+    error: function (request, status, error) {
+        toastr.error(request.responseText);
+        fetchAllUsers();
+    $("#add_user_btn").text('REGISTER');
+	$("#add_user_form")[0].reset();
+	$("#addUserModal").modal('hide');
+    }
 
 	});
 	});

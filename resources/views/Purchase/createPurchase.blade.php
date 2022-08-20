@@ -486,9 +486,8 @@
                 $('#reviewmodal').modal('hide');
                 location.reload(true);
                 },
-                error: function(response){
-                toastr.error('Purchase Save Failed !! Try Again');
-                console.error();
+                error: function (request, status, error) {
+                    alert(request.responseText);
                 }
             });
         });

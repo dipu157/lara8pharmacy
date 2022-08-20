@@ -97,9 +97,12 @@
 	$("#add_generic_form")[0].reset();
 	$("#addGenericModal").modal('hide');
 	},
-    error: function(xhr, status, error) {
-    var err = JSON.parse(xhr.responseText);
-    toastr.error(err.Message);
+    error: function (request, status, error) {
+        toastr.error(request.responseText);
+        fetchAllgenerics();
+        $("#add_generic_btn").text('SAVE');
+	    $("#add_generic_form")[0].reset();
+	    $("#addGenericModal").modal('hide');
     }
 
 	});

@@ -97,7 +97,14 @@
 	$("#add_Shelf_btn").text('SAVE');
 	$("#add_Shelf_form")[0].reset();
 	$("#addShelfModal").modal('hide');
-	}
+	},
+    error: function (request, status, error) {
+        toastr.error(request.responseText);
+        fetchAllShelfs();
+    $("#add_Shelf_btn").text('SAVE');
+	$("#add_Shelf_form")[0].reset();
+	$("#addShelfModal").modal('hide');
+    }
 
 	});
 	});

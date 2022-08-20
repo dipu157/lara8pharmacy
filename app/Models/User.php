@@ -6,12 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 use App\Models\Common\Role;
 use App\Models\Common\Employee;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -26,8 +27,8 @@ class User extends Authenticatable
         'company_id',
         'role_id',
         'employee_id',
-        'name', 
-        'email', 
+        'name',
+        'email',
         'password',
         'status',
     ];

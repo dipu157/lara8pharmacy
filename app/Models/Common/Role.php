@@ -9,7 +9,7 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $table= 'roles';
+    protected $table= 'user_roles';
 
     protected $guarded = ['id', 'created_at','updated_at'];
 

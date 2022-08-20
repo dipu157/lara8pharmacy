@@ -100,7 +100,14 @@
 	$("#add_customer_btn").text('SAVE');
 	$("#add_customer_form")[0].reset();
 	$("#addCustomerModal").modal('hide');
-	}
+	},
+    error: function (request, status, error) {
+        toastr.error(request.responseText);
+        fetchAllCustomers();
+        $("#add_customer_btn").text('SAVE');
+        $("#add_customer_form")[0].reset();
+        $("#addCustomerModal").modal('hide');
+    }
 
 	});
 	});

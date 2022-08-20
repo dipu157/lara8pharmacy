@@ -97,7 +97,14 @@
 	$("#add_MedicineType_btn").text('SAVE');
 	$("#add_MedicineType_form")[0].reset();
 	$("#addMedicineTypeModal").modal('hide');
-	}
+	},
+    error: function (request, status, error) {
+        toastr.error(request.responseText);
+        fetchAllMedicineTypes();
+    $("#add_MedicineType_btn").text('SAVE');
+	$("#add_MedicineType_form")[0].reset();
+	$("#addMedicineTypeModal").modal('hide');
+    }
 
 	});
 	});

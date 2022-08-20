@@ -97,7 +97,14 @@
 	$("#add_strength_btn").text('SAVE');
 	$("#add_strength_form")[0].reset();
 	$("#addStrengthModal").modal('hide');
-	}
+	},
+    error: function (request, status, error) {
+        toastr.error(request.responseText);
+        fetchAllStrength();
+    $("#add_strength_btn").text('SAVE');
+	$("#add_strength_form")[0].reset();
+	$("#addStrengthModal").modal('hide');
+    }
 
 	});
 	});

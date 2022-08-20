@@ -97,7 +97,14 @@
 	$("#add_employee_btn").text('SAVE');
 	$("#add_employee_form")[0].reset();
 	$("#addEmployeeModal").modal('hide');
-	}
+	},
+    error: function (request, status, error) {
+        toastr.error(request.responseText);
+        fetchAllEmployees();
+        $("#add_employee_btn").text('SAVE');
+	$("#add_employee_form")[0].reset();
+	$("#addEmployeeModal").modal('hide');
+    }
 
 	});
 	});

@@ -19,6 +19,7 @@ use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\Purchase\PurchaseController;
 use App\Http\Controllers\Sales\SalesController;
 use App\Http\Controllers\Inventory\InventoryController;
+use App\Http\Controllers\Report\ReportController;
 use App\Models\User;
 use Illuminate\Routing\RouteGroup;
 
@@ -240,5 +241,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/outStock', [InventoryController::class, 'outStockMedicine'])->name('outStock');
     Route::get('/expiredMedicine', [InventoryController::class, 'expiredMedicineList'])->name('expiredMedicine');
     Route::get('/soonExpiredMedicine', [InventoryController::class, 'soonExpiredMedicineList'])->name('soonExpiredMedicine');
+});
+
+// Report Route
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/otherReportIndex', [ReportController::class, 'otherIndex'])->name('otherReport');
 });
 

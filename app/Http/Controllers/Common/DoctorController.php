@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Common;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Common\Doctor;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorController extends Controller
 {
@@ -70,6 +70,10 @@ class DoctorController extends Controller
 
     public function create(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required|max:100',
+        ]);
+
         $data = [
             'company_id' => $this->company_id,
             'full_name' => $request->name,

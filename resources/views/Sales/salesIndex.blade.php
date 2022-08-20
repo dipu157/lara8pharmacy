@@ -751,8 +751,8 @@
                 //$("#invoicemodal").modal("close");
 
             },
-            error: function(response) {
-            console.error();
+            error: function (request, status, error) {
+                alert(request.responseText);
             }
             });
             }

@@ -82,7 +82,14 @@
 	$("#add_openBalance_btn").text('SAVE');
 	$("#add_openBalance_form")[0].reset();
 	$("#addOpeningBalanceModal").modal('hide');
-	}
+	},
+    error: function (request, status, error) {
+        alert(request.responseText);
+        location.reload();
+        $("#add_openBalance_btn").text('SAVE');
+	    $("#add_openBalance_form")[0].reset();
+	    $("#addOpeningBalanceModal").modal('hide');
+    }
 
 	});
 	});
