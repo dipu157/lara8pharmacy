@@ -26,13 +26,23 @@ $links = [
                 'icon' => 'far fa-circle',
                 'children' => [
                     [
-                        'route' => null,
+                        'route' => route('create.roll'),
                         'name' => 'Create Role',
                         'icon' => 'far fa-circle',
                     ],
                     [
-                        'route' => null,
+                        'route' => route('create.permission'),
                         'name' => 'Create Permission',
+                        'icon' => 'far fa-circle',
+                    ],
+                    [
+                        'route' => route('create.roll'),
+                        'name' => 'Permission To Roll',
+                        'icon' => 'far fa-circle',
+                    ],
+                    [
+                        'route' => route('user.permission'),
+                        'name' => 'Permission To User',
                         'icon' => 'far fa-circle',
                     ],
                 ],

@@ -13,6 +13,7 @@ use App\Http\Controllers\Medicine\MedicineController;
 use App\Http\Controllers\Accounts\AccountsController;
 use App\Http\Controllers\Accounts\IncomeController;
 use App\Http\Controllers\Accounts\ExpenseController;
+use App\Http\Controllers\Authorization\RolesController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\Customer_ledgerController;
 use App\Http\Controllers\Supplier\SupplierController;
@@ -46,6 +47,23 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/updatePass', [HomeController::class, 'updatePassword'])->name('updatePass');
     Route::get('/settings', [HomeController::class, 'templateSettings'])->name('company');
     Route::post('/settingsEdit', [HomeController::class, 'editSettings'])->name('editCompany');
+});
+
+// Authorization Route
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/createRollIndex', [RolesController::class, 'rollIndex'])->name('create.roll');
+    Route::get('/allRoll', [RolesController::class, 'fetchRoll'])->name('allRolls');
+    Route::post('/saveRoll', [RolesController::class, 'saveRoll'])->name('save.roll');
+
+	Route::get('/createPermissionIndex', [RolesController::class, 'permissionIndex'])->name('create.permission');
+    Route::get('/allPermission', [RolesController::class, 'fetchPermission'])->name('allPermission');
+    Route::post('/savePermission', [RolesController::class, 'savePermission'])->name('save.permission');
+
+	Route::get('/rollPermissionIndex', [RolesController::class, 'rollPermissionIndex'])->name('roll.permission');
+	Route::post('/updateRolePermission', [RolesController::class, 'UpdateRolePermission'])->name('updateRolePermission');
+
+	Route::get('/userPermissionIndex', [RolesController::class, 'userPermissionIndex'])->name('user.permission');
+	Route::get('/getallUsers', [RolesController::class, 'getallUsers'])->name('allUsers');
 });
 
 // Employee Route
